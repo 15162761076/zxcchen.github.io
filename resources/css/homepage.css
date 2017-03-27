@@ -5,10 +5,15 @@
 
 div{
     border:1px solid black;
+    box-sizing:border-box;
 }
 
 ul{
     list-style:none;
+}
+
+li{
+    display:inline-block;
 }
 
 #container{
@@ -18,4 +23,9 @@ ul{
 
 #header{
     height:200px;
+}
+
+#header #logo,#banner_ul,#banner_search{
+    height:180px;
+    margin-top:20px;
 }
