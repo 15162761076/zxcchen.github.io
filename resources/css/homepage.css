@@ -5,7 +5,6 @@
 }
 
 div{
-    border:1px solid black;
     box-sizing:border-box;
 }
 
@@ -19,23 +18,25 @@ li{
 
 a{
     text-decoration:none;
+    font-size: 1.5em;
     color:black;
 }
 
 #container{
-    width:80%;
+    width:70%;
+    height:2800px;
     margin:0 auto;
 }
 
 #header{
-    height:200px;
+    height:8%;
 }
 
 #header #logo,#banner_ul,#banner_search{
     display:inline-block;
     height:180px;
     vertical-align:bottom;
-    margin-top:20px;
+    margin-top:6%;
 }
 
 #header #logo{
@@ -45,42 +46,60 @@ a{
 #header #logo span{
     position:relative;
     top:5%;
-    font-size:46px;
+    font-size:6em;
     font-weight:800;
     letter-spacing:2px;
 }
 
 #header #logo #search{
     position:relative;
-    top:10%;    
+    top:10%; 
+    width: 45%;
+    height: 12%;
+    border-bottom: 2px solid black;
+}
+
+#header #logo #search input{
+    border: none;
+    width: 80%;
 }
 
 #header #logo #search button{
     border:none;
+    background-color: white;
+    font-size: 1em;
+    letter-spacing: 10px;
+    float: right;
 }
 
 #header #banner_ul{
-    width:30%;
+    width:20%;
 }
 
 #header #banner_ul li{
     width:35%;
-    margin-left:20px;
-    margin-top:10px;
+    margin-left:12%;
+    margin-top:3%;
+}
+
+#header #banner_ul li a{
+    font-size: 1em;
 }
 
 #header #banner_search{
     width:18%;
+    border-left:1px solid rgb(184,184,184);
 }
 
 #header #banner_search a{
     display:inline-block;
-    margin-top:10px;
+    margin-top:3%;
+    margin-left: 2%;
+    font-size: 1em;
 }
 
 #section1{
-    height:400px;
-    background-color:yellow;
+    height:27%;
 }
 
 #section1 #nav{
@@ -96,18 +115,27 @@ a{
 #section1 #nav ul li{
     width:12%;
     text-align:center;
-    margin-right:10px;
-    line-height:60px;
+    margin-right:1%;
+    line-height:160px;
     font-size:18px;
 }
 
+#section1 #nav ul li a{
+    border-right: 1px solid rgb(234,234,234);
+,}
+
+#section1 #nav ul li:last-child a{
+    border-right:none;
+}
+
 #section1 #nav ul li:nth-of-type(1){
-    margin-left:1%;
+    margin-left:3%;
 }
 
 #section1 #slide{
     height:82%;
     font-size:0;
+    border:1px solid rgb(234,234,234);
 }
 
 #section1 #slide #introduction,#scroll_banner{
@@ -116,56 +144,69 @@ a{
 }
 
 #section1 #slide #introduction{
-    width:32%;
+    width:25%;
+    border-right: 1px solid rgb(234,234,234);
 }
 
 #section1 #slide #scroll_banner{
-    width:68%;
+    width:75%;
     position:relative;
+}
+
+#section1 #slide #scroll_changebtn{
+    height: 5%;
+    position: relative;
+    top: -40%;
 }
 
 #section1 #slide #btn_left,#btn_right{
     width:30px;
     height:30px;
-    position:relative;
+    border: 1px solid black;
 }
 
 #section1 #slide #btn_left{
-    top:-40%;
-    left:1%;
+    float: left;
+    position: relative;
+    left: 1%;
 }
 
 #section1 #slide #btn_right{
-    top:-52%;
-    left:94%;
+    float: right;
+    position: relative;
+    right: 1%;
 }
 
 #section1 #slide #blogname{
     position:relative;
-    top:-50%;
-    left:26%;
-    width:120px;
-    height:40px;
-    font-size:30px;
+    top:-40%;
+    left:14%;
+    font-size: 80px;
 }
 
 #section1 #slide #scroll_btn{
     position:relative;
-    top:-43%;
-    margin-left:16px;
-    width:28%;
-    height:1%;
+    top:-27%;
+    margin-left:3%;
+    width:20%;
+    height:2%;
 }
 
 #section1 #slide #scroll_btn  ul li{
-    width:19%;
-    border:1px solid black;
-    background-color:red;
+    box-sizing: border-box;
+    width:20%;
+    height: 4px;
+    border-right:1px solid white;
+    background-color:rgb(194,194,194);
+}
+
+#section1 #slide #scroll_btn  ul li:nth-of-type(1){
+    background-color:rgb(104,104,104);
 }
 
 #section2{
-    height:400px;
-    background-color:yellow;
+    height:30%;
+    margin-top: 3%;
 }
 
 #section2 #headline{
@@ -174,14 +215,111 @@ a{
 }
 
 #section2 table{
+    margin-top: 1%;
     border-collapse:collapse;
     width:100%;
-    height:80%;
+    height:90%;
+    border: 1px solid rgb(234,234,234);
 }
 
 #section2 table .item_display{
-    background-color:red;
     float:left;
-    width:40%;
-    height:60%;
+    margin-left: 4%;
+    width:50%;
+    height:85%;
+    border:1px solid rgb(234,234,234);
+}
+
+#section2 table .item_description{
+    width:36%;
+    height: 85%;
+    float: right;
+    margin-right: 4%;
+}
+
+#section2 table .item_description span:first-child{
+    display: block;
+    height: 10%;
+    font-size: 1em;
+}
+
+#section2 table .item_description span:last-child{
+    display: block;
+    height: 85%;
+    border:1px solid rgb(234,234,234);
+}
+
+#section3{
+    height: 22%;
+    margin-top: -1%;
+    padding-bottom: 1%;
+}
+
+#section3 div{
+    display: inline-block;
+    height: 100%;
+    border:1px solid rgb(234,234,234);
+    border-top:3px solid black;
+}
+
+#section3 div:nth-of-type(1){
+    float: left;
+    width: 31%;
+}
+
+#section3 div:nth-of-type(2){
+    width: 32%;
+    margin-left: 2%;
+}
+
+#section3 div:nth-of-type(3){
+    float: right;
+    width: 33%;
+}
+
+
+#footer{
+    height: 11%;
+}
+
+#footer #social_contact{
+    height: 12%;
+    border-top:2px solid black;
+    border-bottom:2px solid black;
+}
+
+#footer #social_contact ul{
+    display: inline-block;
+    width: 60%;
+}
+
+#footer #social_contact ul li{
+    width: 19%;
+}
+
+#footer #social_contact span{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    float: right;
+    margin-left: 1%;
+    margin-top:2px;
+}
+
+#footer #social_text{
+    margin-top: 1%;
+    height:65%;
+}
+
+#footer #social_text span{
+    display: inline-block;
+    width: 20%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+#footer #social_text span:nth-of-type(3){
+    float: right;
+    margin-right: 2%;
 }
