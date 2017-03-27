@@ -23,6 +23,7 @@ li{
 
 #header{
     height:200px;
+    background-color:red;
 }
 
 #header #logo,#banner_ul,#banner_search{
