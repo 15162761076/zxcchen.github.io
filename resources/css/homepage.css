@@ -162,3 +162,26 @@ a{
     border:1px solid black;
     background-color:red;
 }
+
+#section2{
+    height:400px;
+    background-color:yellow;
+}
+
+#section2 #headline{
+    font-size:30px;
+    font-weight:800px;
+}
+
+#section2 table{
+    border-collapse:collapse;
+    width:100%;
+    height:80%;
+}
+
+#section2 table .item_display{
+    background-color:red;
+    float:left;
+    width:40%;
+    height:60%;
+}
