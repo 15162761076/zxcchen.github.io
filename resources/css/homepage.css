@@ -18,7 +18,7 @@ li{
 
 a{
     text-decoration:none;
-    font-size: 1.5em;
+    font-size: 16px;
     color:black;
 }
 
@@ -81,10 +81,6 @@ a{
     margin-top:3%;
 }
 
-#header #banner_ul li a{
-    font-size: 1em;
-}
-
 #header #banner_search{
     width:18%;
     border-left:1px solid rgb(184,184,184);
@@ -94,7 +90,6 @@ a{
     display:inline-block;
     margin-top:3%;
     margin-left: 2%;
-    font-size: 1em;
 }
 
 #section1{
@@ -116,8 +111,11 @@ a{
     width:12%;
     text-align:center;
     margin-right:1%;
-    line-height:120px;
-    font-size:18px;
+    margin-top:2%;
+}
+
+#section1 #nav ul li a{
+    font-size: 26px;
 }
 
 #section1 #nav ul li:nth-of-type(1){
@@ -288,6 +286,10 @@ a{
 
 #footer #social_contact ul li{
     width: 19%;
+}
+
+#footer #social_contact ul li a{
+    font-size: 20px;
 }
 
 #footer #social_contact span{
