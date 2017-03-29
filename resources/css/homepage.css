@@ -4,7 +4,7 @@ body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,s
 }
 
 body{
-    font:12px"宋体","Arial Narrow",
+    font:1em,"宋体","Arial Narrow",
     HELVETICA;background:#fff;
     -webkit-text-size-adjust:100%;
 }
@@ -13,6 +13,7 @@ a{
     color:#2d374b;
     text-decoration:none;
 }
+
 em{
     font-style:normal;
 }
@@ -159,8 +160,8 @@ a:hover{
 
 #section1 #nav ul li a{
     display: inline-block;
-    width: 150px;
-    height: 30px;
+    width: 110%;
+    height: 20%;
     font-size: 2em;
 }
 
@@ -191,8 +192,8 @@ a:hover{
 }
 
 #section1 #slide #btn_left,#btn_right{
-    width:30px;
-    height:30px;
+    width:2%;
+    height:104%;
     border: 1px solid black;
     cursor: pointer;
 }
@@ -222,12 +223,12 @@ a:hover{
     top:-16%;
     margin-left:3%;
     width:20%;
-    height:2%;
+    height:6%;
 }
 
 #section1 #slide #scroll_btn  ul li{
     box-sizing: border-box;
-    width:18%;
+    width:17%;
     height: 4px;
     border-right:1px solid white;
     background-color:rgb(194,194,194);
@@ -245,7 +246,7 @@ a:hover{
 
 #section2 #headline{
     font-size:4em;
-    font-weight:800px;
+    font-weight:800;
 }
 
 #section2 table{
@@ -337,8 +338,8 @@ a:hover{
 
 #footer #social_contact span{
     display: inline-block;
-    width: 25px;
-    height: 25px;
+    width: 1.6%;
+    height: 50%;
     border: 1px solid black;
     float: right;
     margin-left: 1%;
