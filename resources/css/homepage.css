@@ -33,7 +33,7 @@ a{
 
 #header #logo,#banner_ul,#banner_search{
     display:inline-block;
-    height:180px;
+    height:60%;
     vertical-align:bottom;
     margin-top:6%;
 }
