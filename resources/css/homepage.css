@@ -41,7 +41,7 @@ div{
 
 a{
     text-decoration:none;
-    font-size: 1em;
+    font-size: 0.875em;
     color:black;
     border-bottom:1px solid white;
     
@@ -118,7 +118,7 @@ a:hover{
     height: 18%;
     width: 80%;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 #header #banner_search{
@@ -162,7 +162,7 @@ a:hover{
     display: inline-block;
     width: 110%;
     height: 20%;
-    font-size: 2em;
+    font-size: 1.6em;
 }
 
 #section1 #slide{
@@ -228,7 +228,7 @@ a:hover{
 
 #section1 #slide #scroll_btn  ul li{
     box-sizing: border-box;
-    width:17%;
+    width:16%;
     height: 4px;
     border-right:1px solid white;
     background-color:rgb(194,194,194);
@@ -329,11 +329,13 @@ a:hover{
 }
 
 #footer #social_contact ul li{
-    width: 19%;
+    width: 18%;
 }
 
 #footer #social_contact ul li a{
-    font-size: 1.75em;
+    display: inline-block;
+    height: 40px;
+    font-size: 1.25em;
 }
 
 #footer #social_contact span{
