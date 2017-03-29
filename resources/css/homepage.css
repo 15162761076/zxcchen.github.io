@@ -40,7 +40,7 @@ div{
 
 a{
     text-decoration:none;
-    font-size: 16px;
+    font-size: 1em;
     color:black;
     border-bottom:1px solid white;
     
@@ -166,7 +166,6 @@ a:hover{
 
 #section1 #slide{
     height:82%;
-    font-size:0;
     border:1px solid rgb(234,234,234);
 }
 
@@ -182,7 +181,7 @@ a:hover{
 
 #section1 #slide #scroll_banner{
     width:75%;
-    position:relative;
+    float: right;
 }
 
 #section1 #slide #scroll_changebtn{
@@ -210,16 +209,17 @@ a:hover{
     right: 1%;
 }
 
-#section1 #slide #blogname{
+#section1 #slide span{
     position:relative;
-    top:-40%;
-    left:14%;
-    font-size: 80px;
+    font-size: 6em;
+    position: relative;
+    top:64%;
+    left: 72%;
 }
 
 #section1 #slide #scroll_btn{
     position:relative;
-    top:-27%;
+    top:-16%;
     margin-left:3%;
     width:20%;
     height:2%;
@@ -227,7 +227,7 @@ a:hover{
 
 #section1 #slide #scroll_btn  ul li{
     box-sizing: border-box;
-    width:20%;
+    width:18%;
     height: 4px;
     border-right:1px solid white;
     background-color:rgb(194,194,194);
@@ -244,7 +244,7 @@ a:hover{
 }
 
 #section2 #headline{
-    font-size:30px;
+    font-size:4em;
     font-weight:800px;
 }
 
@@ -332,7 +332,7 @@ a:hover{
 }
 
 #footer #social_contact ul li a{
-    font-size: 20px;
+    font-size: 1.75em;
 }
 
 #footer #social_contact span{
