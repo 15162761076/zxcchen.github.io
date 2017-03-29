@@ -2,8 +2,8 @@ var express=require("express");
 var server = express()
 var fs = require("fs")
 
-server.use(express.static("resources"));
-server.get("/",function(req,res){
+server.use("/resources",express.static("resources"));
+server.get("(/|/homepage.html)",function(req,res){
     res.sendFile(__dirname+"/homepage.html");
 })
 
