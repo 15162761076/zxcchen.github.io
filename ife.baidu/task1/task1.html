@@ -132,9 +132,56 @@
     <section>
         <h2>这以后是一个侧栏，这时侧栏的标题</h2>
         <form>
-        
+            <div>
+                <span>请输入邮箱地址</span>
+                <input type="text" placeholder="这是一个文本输入框" />
+                <span>邮箱地址请按照要求格式输入</span>
+            </div>
+            
+            <div>
+                <span>请输入密码</span>
+                <input type="text" placeholder="这是一个文本输入框" />
+                <span>请重复输入密码</span>
+                <input type="text" placeholder="这是一个文本输入框" />
+                <span>密码请为6-16位英文数字</span>
+            </div>
+            
+            <div>
+                <span>性别:</span>
+                <input type="radio" name="sex" id="male" checked="check" />
+                <label for="male">男</label>
+                <input type="radio" name="sex" id="famale"/>
+                <label for="famale">女</label>
+            </div>
+            
+            <div>
+                <span>城市</span>
+                <select>
+                    <option>北京</option>
+                    <option>广州</option>
+                    <option>上海</option>
+                </select>
+            </div>
+            
+            <div>
+                <span>爱好：</span>
+                <label><input type="checkbox" />运动</label>
+                <label><input type="checkbox" />艺术</label>
+                <label><input type="checkbox" />科学</label>
+            </div>
+            
+            <div>
+                <span>个人描述</span>
+                <textarea cols="30" role="50" placeholder="这是一个多行描述框"></textarea>
+            </div>
+            
+            <input type="submit" value="确认提交" /> 
         </form>
     </section>
+    
+    <footer>
+        <span>版权所有©</span>
+    </footer>
 </body>
 
 </html>
