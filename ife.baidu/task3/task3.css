@@ -44,6 +44,14 @@ div{
     margin-right: 180px;
 }
 
+.box .center .text{
+    margin-top:20px;
+}
+
+.box .center .text:first-child{
+    margin-top:0;
+}
+
 .box .right{
     float: right;
     background-color: white;
@@ -56,6 +64,20 @@ div{
     margin-top:20px;
 }
 
-.box .right .logo:first-child{
-    margin-top:0;
+.project_tab_menu [id^='tab']:checked ~ [id^='tab_menu']{
+    display: block;
+    position:absolute;
+    width:403px;
+    border: 1px solid #cacbcb;
+    border-radius:0 5px 5px;
+    padding:28px 49px 35px 38px;
+    left:0;top:40px;
+}
+.project_tab_menu [id^='tab']:checked~label{
+    position: relative;
+    z-index: 1;
+    border:1px solid #cacbcb;
+    border-bottom: none;
+    background: #fff;
+    height:28px;
 }
