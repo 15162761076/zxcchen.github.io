@@ -1,0 +1,36 @@
+*{
+    margin:0;
+    padding: 0;
+    font-size: 0;
+}
+
+.box{
+    margin: 50px;
+    width: 400px;
+    height: 200px;
+    background-color: green;
+}
+
+ul{
+    display: inline-block;
+}
+
+#page1{
+    height: 200px;
+}
+
+.span-box{
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+a{
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    background-color: white;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+}
