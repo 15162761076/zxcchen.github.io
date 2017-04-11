@@ -29,8 +29,8 @@
 
 <script type="text/javascript">
 
-    var data = [],
-        oSource = document.getElementById("source").getElementsByTagName("li"),
+    
+    var oSource = document.getElementById("source").getElementsByTagName("li"),
         oResort = document.getElementById("resort"),
         oBtn = document.getElementById("sort-btn");
     
@@ -53,11 +53,11 @@
         */
         var tmpK;
         var tmpJ;
+        var data = [];
         for(var i=0;i<oSource.length;i++){
             tmpK = oSource[i].innerHTML.slice(0,2);
             tmpJ = oSource[i].innerHTML.replace(/[^0-9]/ig,"");
             data.push([tmpK,tmpJ]);
-
         };
         return data;
     }
@@ -67,18 +67,18 @@
     * 按空气质量对data进行从小到大的排序
     * 返回一个排序后的数组
     */
-    function sortAqiData(data) {
-        var tmpK;
-        for(var j=0;j<data.length;j++){
-            tmpK = data[j];
-            if(j == data.length-1){
-                continue;
+    function sortAqiData(data){
+        data.sort(function(a,b){
+            if(a[1]>b[1]){
+                return -1;
             }
-            if(data[j][1]<data[j+1][1]){
-                data[j] = data[j+1];
-                data[j+1] = tmpK;
+            if(a[1]<b[1]){
+                return 1;
             }
-        }
+            if(a[1] == b[1]){
+                return 0;
+            }
+        })
         return data;
     }
 
