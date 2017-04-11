@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>IFE JavaScript Task 01</title>
+    <title>IFE JavaScript Task 03</title>
   </head>
 <body>
 
@@ -39,7 +39,6 @@
     * 读取id为source的列表，获取其中城市名字及城市对应的空气质量
     * 返回一个数组，格式见函数中示例
     */
-    
     function getData() {
         /*
         coding here
@@ -62,14 +61,25 @@
         };
         return data;
     }
-
+    
     /**
     * sortAqiData
     * 按空气质量对data进行从小到大的排序
     * 返回一个排序后的数组
     */
     function sortAqiData(data) {
-
+        var tmpK;
+        for(var j=0;j<data.length;j++){
+            tmpK = data[j];
+            if(j == data.length-1){
+                continue;
+            }
+            if(data[j][1]<data[j+1][1]){
+                data[j] = data[j+1];
+                data[j+1] = tmpK;
+            }
+        }
+        return data;
     }
 
     /**
@@ -78,7 +88,11 @@
     * 格式见ul中的注释的部分
     */
     function render(data) {
-
+        var tmpK = "";
+        for(var i=0;i<data.length;i++){
+            tmpK += "<li>第"+(i+1)+"名："+data[i][0]+"空气质量:"+"<b>"+data[i][1]+"</b></li>";
+        }
+        oResort.innerHTML = tmpK;
     }
 
     function btnHandle() {
@@ -88,9 +102,8 @@
     }
 
     function init() {
-
         // 在这下面给sort-btn绑定一个点击事件，点击时触发btnHandle函数
-
+        oBtn.addEventListener("click",btnHandle);
     }
 
     init();
