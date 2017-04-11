@@ -4,33 +4,64 @@
     font-size: 0;
 }
 
-.box{
-    margin: 50px;
-    width: 400px;
-    height: 200px;
+.container {
+    position:relative;
+    width:400px;
+    height:200px;
+    z-index: 0;
     background-color: green;
 }
 
-ul{
-    display: inline-block;
+.container div.button a{
+    background-color: #fff;
+    font-size: 15px;
+    position: absolute;
+    z-index: 2;
 }
 
-#page1{
-    height: 200px;
+.container div.button .button_effect{
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:0;
+    height:200px;
+    z-index: 1;
+    display: none;
 }
 
-.span-box{
-    display: inline-block;
-    vertical-align: bottom;
+.container div#buttonA .button_effect{
+    background-color: red;
 }
 
-a{
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    margin-left: 5px;
-    background-color: white;
-    line-height: 40px;
-    text-align: center;
-    font-size: 16px;
+.container div#buttonB .button_effect{
+    background-color: yellow;
+}
+
+.container div#buttonC .button_effect{
+    background-color: blue;
+}
+
+.container div#buttonA a{
+    left:250px;
+    top:170px;
+}
+
+.container div#buttonB a{
+    left:300px;
+    top:170px;
+}
+
+.container div#buttonC a{
+    left:350px;
+    top:170px;
+}
+
+.container div.button a:hover + div.button_effect{
+    display: block;
+    animation: toblock 2s;
+}
+
+@keyframes toblock{
+    from    {width: 0px;}
+    to      {width:400px;}
 }
