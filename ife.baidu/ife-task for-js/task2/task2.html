@@ -34,13 +34,11 @@
             var k = 0;    
             
             for(var i=0;i<aqiData.length;i++){
-                for(var j=0;j<aqiData[i].length;j++){
-                    if(aqiData[i][j]>60){
-                        k++;
-                        var oLi = document.createElement("li");
-                        oLi.innerHTML = "第"+k+"名:"+aqiData[i];
-                        oUl.appendChild(oLi);
-                    }
+                if(aqiData[i][1]>60){
+                    k++;
+                    var oLi = document.createElement("li");
+                    oLi.innerHTML = "第"+k+"名:"+aqiData[i];
+                    oUl.appendChild(oLi);
                 }
             }
         })();
