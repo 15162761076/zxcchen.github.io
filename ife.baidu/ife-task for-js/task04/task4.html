@@ -34,26 +34,29 @@
         var input = document.getElementById("text"),
                 box1 = document.getElementById("box1"),
                 box2 = document.getElementById("box2");
+        var spans = document.getElementsByTagName("span");
         
         box1.addEventListener("click",function(e){
-            var spans = document.createElement("span");
-            spans.innerHTML = input.value;
+            var newSpan = document.createElement("span");
+            newSpan.innerHTML = input.value;
             
             if(e.target.id == "left-in"){
                 if(box2.firstChild){
-                    box2.insertBefore(spans,box2.firstChild);
+                    box2.insertBefore(newSpan,box2.firstChild);
                 }else{
-                    box2.appendChild(spans);
+                    box2.appendChild(newSpan);
                 }
             }
             if(e.target.id == "right-in"){
-                box2.appendChild(spans);
+                box2.appendChild(newSpan);
             }
             if(e.target.id == "left-out"){
-                box2.removeChild(box2.firstChild);
+                alert(spans[0].innerHTML);
+                box2.removeChild(spans[0]);
             }
             if(e.target.id == "right-out"){
-                box2.removeChild(box2.lastChild);
+                alert(spans[spans.length-1].innerHTML);
+                box2.removeChild(spans[spans.length-1]);
             }
         })
     </script>
