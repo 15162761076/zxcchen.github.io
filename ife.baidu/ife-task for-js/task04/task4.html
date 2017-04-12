@@ -1,14 +1,61 @@
 <!DOCTYPE>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>IFE JavaScript Task 04</title>
-  </head>
+    <style>
+        #box1 {
+            margin-bottom: 20px;
+        }
+        
+        span {
+            padding: 10px;
+            background-color: red;
+            color: white;
+            text-align: center;
+            margin-right: 5px;
+        }
+    </style>
+</head>
 <body>
-
-
-<script type="text/javascript">
-
-</script>
+    
+    <div id="box1">
+        <input id="text" type="text" />
+        <button id="left-in">左侧入</button>
+        <button id="right-in">右侧入</button>
+        <button id="left-out">左侧出</button>
+        <button id="right-out">右侧出</button>
+    </div>
+    <div id="box2">
+    
+    </div>
+    
+    <script type="text/javascript">
+        var input = document.getElementById("text"),
+                box1 = document.getElementById("box1"),
+                box2 = document.getElementById("box2");
+        
+        box1.addEventListener("click",function(e){
+            var spans = document.createElement("span");
+            spans.innerHTML = input.value;
+            
+            if(e.target.id == "left-in"){
+                if(box2.firstChild){
+                    box2.insertBefore(spans,box2.firstChild);
+                }else{
+                    box2.appendChild(spans);
+                }
+            }
+            if(e.target.id == "right-in"){
+                box2.appendChild(spans);
+            }
+            if(e.target.id == "left-out"){
+                box2.removeChild(box2.firstChild);
+            }
+            if(e.target.id == "right-out"){
+                box2.removeChild(box2.lastChild);
+            }
+        })
+    </script>
 </body>
 </html>
