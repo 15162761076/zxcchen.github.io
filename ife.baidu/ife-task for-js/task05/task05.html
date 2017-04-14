@@ -1,295 +1,245 @@
 <!DOCTYPE>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>IFE JavaScript Task 05</title>
-        <style>
-            #form_Btn{
-                display: inline-block;
+<head>
+    <meta charset="UTF-8" />
+    <title>IFE JavaScript Task 05</title>
+    <style>
+        #form_Btn{
+            display: inline-block;
+        }
+        #form_Chart span{
+            display: inline-block;
+            width: 10px;
+            background-color: aquamarine;
+            margin-right: 2px;
+        }
+        #form_Chart{
+            width:1000px;
+            height:120px;
+            border:1px solid black;
+            margin: 20px 0;
+        }
+        
+        #form_Chart div{
+            height: 100%;
+            display: inline-block;
+        }
+        
+        #form_Chart span{
+            width: 10px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="form_Text" />
+    <div id="form_Btn">
+        <input type="button" value="左添加" />
+        <input type="button" value="右添加" />
+        <input type="button" value="左删除" />
+        <input type="button" value="右删除" />
+        <input type="button" value="乱序" />
+        <input type="button" value="冒泡" />
+        <input type="button" value="选择" />
+        <input type="button" value="插入" />
+        <input type="button" value="快排" />
+    </div>
+    <div id="form_Chart"><div></div></div>
+    <script>
+        var Text = document.getElementById("form_Text"),
+            formBtn = document.getElementById("form_Btn"),
+            formChart = document.getElementById("form_Chart"),
+            data = [],
+            frames=[];
+        
+        function draw(){
+            var span = document.createElement("span"),
+                s = document.getElementsByTagName("span");
+            span.style.height = Text.value + "px";
+            return {"s":s,"span":span};
+        }
+        
+        function leftAdd(){
+            var result = draw();
+            if(result.s.length == 0){
+                formChart.appendChild(result.span);
+            }else{
+                formChart.insertBefore(result.span,result.s[0])
             }
-            #form_Chart span{
-                display: inline-block;
-                width: 10px;
-                background-color: aquamarine;
-                margin-right: 2px;
-            }
-            #form_Chart{
-                width:1000px;
-                height:120px;
-                border:1px solid black;
-                margin: 20px 0;
-            }
-            #form_Chart div{
-                display: inline-block;
-                height: 100%;
-            }
-        </style>
-    </head>
-    <body>
-        <input type="text" id="form_Text" />
-        <div id="form_Btn">
-            <input type="button" value="左添加" />
-            <input type="button" value="右添加" />
-            <input type="button" value="左删除" />
-            <input type="button" value="右删除" />
-            <input type="button" value="升序" />
-            <input type="button" value="降序" />
-            <input type="button" value="乱序" />
-            <input type="button" value="冒泡" />
-            <input type="button" value="选择" />
-            <input type="button" value="插入" />
-            <input type="button" value="希尔" />
-            <input type="button" value="快排" />
-        </div>
-        <div id="form_Chart"><div></div></div>
-        <script>
-            var formText = document.getElementById("form_Text");
-            var formBtn = document.getElementById("form_Btn");
-            var formChart = document.getElementById("form_Chart");
-            var data = [];
-
-            function init(){
-                var spans = document.createElement("span");
-                spans.style.height = formText.value+"px";
-                var s = document.getElementsByTagName("span");
-                var lastSpan = formChart.lastChild;
-                return {"s":s,"spans":spans};
-            }
-            
-            function leftAdd(){
-                if(formText.value == ""){
-                    return;
-                }
-                var result = init();
-                if(result.s.length > 60){
-                    alert("最多添加60项!");
-                    return;
-                }
-                if(result.s.length == 0){
-                    formChart.appendChild(result.spans);
-                }else{
-                    formChart.insertBefore(result.spans,result.s[0]);
-                }
-                data.unshift(formText.value);
-            }
-            
-            function leftDel(){
-                var result = init();
-                if(result.s.length == 0){
-                    return;
-                }
+        }
+        
+        function rightAdd(){
+            var result = draw();
+            formChart.appendChild(result.span);
+        }
+        
+        function leftDel(){
+            var result = draw();
+            if(result.s.length == 0){
+                return;
+            }else{
                 formChart.removeChild(result.s[0]);
-                data.shift(formText.value);
             }
-            
-            function rightAdd(){
-                if(formText.value == ""){
-                    return;
-                }
-                var result = init();
-                if(result.s.length <= 60){
-                    formChart.appendChild(result.spans);
-                    data.push(formText.value);
-                }else{
-                    alert("最多添加60项!");
-                }
-            }
-            
-            function rightDel(){
-                var result = init();
-                if(result.s.length == 0){
-                    return;
-                }
+        }
+        
+        function rightDel(){
+            var result = draw();
+            if(result.s.length == 0){
+                return;
+            }else{
                 formChart.removeChild(result.s[result.s.length-1]);
-                data.pop(formText.value);
             }
+        }
+        
+        function disorder(){
+            formChart.innerHTML = "<div></div>";
+            data.length = 0;
+            for(var i=0;i<60;i++){
+                var span = document.createElement("span"),
+                    tmpK = Math.floor(Math.random()*(100-10+1)+10);
+                span.style.height = tmpK + "px";
+                formChart.appendChild(span);
+                data.push(tmpK);
+            }
+        }
+        
+        function show(){
+            if(frames.length == 0){
+                return;
+            } 
             
-            function asc(){
-                var result = init();
-                data.sort();
-                for(var i=0;i<result.s.length;i++){
-                    result.s[i].style.height ="";
-                }
-                for(var i=0;i<result.s.length;i++){
-                    result.s[i].style.height = data[i]+"px";
+            var s = document.getElementsByTagName("span"),
+                dd = frames.shift(),
+                d1 = dd[0],
+                d2 = dd[1],
+                tmp = s[d1].style.height;
+            
+            s[d1].style.height = s[d2].style.height;
+            s[d2].style.height = tmp;
+            setTimeout(show,200);
+        }
+        
+        //冒泡排序，两项之间进行比较，较大项顺序向后交换
+        function bubbleSort(){
+            var min = 0;
+            for(var i=0;i<data.length;i++){
+                for(var j=0;j<data.length-i-1;j++){
+                    min = data[j];
+                    if(data[j]>data[j+1]){
+                        data[j] = data[j+1];
+                        data[j+1] = min;
+                        frames.push([j,j+1]);
+                    }
                 }
             }
-            
-            function desc(){
-                var result = init();
-                data.sort(function(a,b){return b-a;});
-                for(var i=0;i<result.s.length;i++){
-                    result.s[i].style.height ="";
-                }
-                for(var i=0;i<result.s.length;i++){
-                    result.s[i].style.height = data[i]+"px";
-                }
-            }
-            
-            function x(){
-                formChart.innerHTML = "<div></div>";
-                data.length = 0;
-                for(var i=0;i<60;i++){
-                    var spans = document.createElement("span");
-                    var xx = Math.ceil(Math.random()*100);
-                    spans.style.height = xx+"px";
-                    formChart.appendChild(spans);
-                    data.push(xx);
+            setTimeout(show,200);
+        }
+        
+        //选择排序，第一轮找到最小值，与data[0]交换位置，第二轮找到最小值，与data[1]交换位置
+        function selectionSort(){
+            var min = 0;
+            for(var i=0;i<data.length;i++){
+                for(var j=i;j<data.length;j++){
+                    min = data[i];
+                    if(data[j]<data[i]){
+                        data[i] = data[j];
+                        data[j] = min;
+                        frames.push([i,j])
+                    }
                 }
             }
-            
-            var frames = [];
-            var num = document.getElementsByTagName("span");
-            
-            //动画
-            function ddd(){
-                
-                if(frames.length == 0){
+            setTimeout(show,200)
+        }
+        
+        //插入排序 第一项与第二项比较,较小，交换位置；增大比较区间，第三项与第二项比较较小，交换位置，在于第一项比较较小，交换位置
+        function insertionSort(){
+            var min = 0;
+            for(var i=0;i<data.length;i++){
+                for(var j=i;j>0;j--){
+                    min = data[j]
+                    if(data[j]<data[j-1]){
+                        data[j] = data[j-1];
+                        data[j-1] = min;
+                        frames.push([j-1,j])
+                    }
+                }
+            }
+            setTimeout(show,200);
+        }
+        
+        //快排 第一轮从数组中选择一个基准数，将数组分为两组，大于基准数，小于基准数
+        //第二轮从小于基准数组中在选择一个基准数，再次排序，再分化数组范围，再排序
+        function quickSort(){
+            var low = 0,
+                high = data.length-1;
+            var sort = function(low,high){
+                if(low>high){
                     return;
                 }
-                var dd = frames.shift();
-                var d = dd[0];
-                var g = dd[1];
-                var tmp = num[d].style.height;
-                
-                num[d].style.height = num[g].style.height;
-                num[g].style.height = tmp;
-                setTimeout(ddd,30);
-            }
-            
-            //冒泡排序，两项之间进行比较，较大项顺序向后交换
-            function y(){
-                var tmpI = 0;
-                for(var i=0;i<data.length;i++){
-                    for(var j=0;j<data.length-i-1;j++){
-                        tmpI = data[j];
-                        if(data[j]>data[j+1]){
-                            data[j] = data[j+1];
-                            data[j+1] = tmpI;
-                            frames.push([j,j+1]);
-                        }
+                var key = data[low],
+                    tmpLow = low,
+                    tmpHigh = high;
+                while(low<high){
+                    while(low<high && key<=data[high]){
+                        high--;
+                    }
+                    data[low] = data[high];
+                    frames.push([low,high]);
+                    while(low<high && data[low]<=key){
+                        low++;
+                    }
+                    data[high] = data[low];
+                    frames.push([low,high]);
+                }
+                data[low] = key;
+                sort(tmpLow,low-1);
+                sort(high+1,tmpHigh);
+            };
+            sort(low,high);
+            setTimeout(show,200);
+        }
+        
+        
+        formBtn.addEventListener("click",function(e){
+            var re = /^[1-9][0-9]$/; 
+            if(!re.test(e.target.value)){
+                if(e.target.value == "左添加"){
+                    if(Text.value == ""){
+                        alert("输入框不能为空！")
+                    }else{
+                        leftAdd();
                     }
                 }
-                setTimeout(ddd,30);
-            }
-            
-            //快排 第一轮从数组中选择一个基准数，将数组分为两组，大于基准数，小于基准数
-            //第二轮从小于基准数组中在选择一个基准数，再次排序，再分化数组范围，再排序
-//            var cc = [10,12,6,8,14];
-//            [10,12,6,8,14]   10
-//            [8,12,6,'8'.14]  10
-//            [8,'12',6,12,14] 10
-//            [8,6,'6',12,14]  10
-//            [8,6,10,12,14]
-//            [8,6] 10 [12,14]
-//            [6,'6']  8
-//            [6]  6
-//            [6]
-//            [6,8]
-//            [12,14]
-//            [6,8,10,12,14]
-            
-            //选择排序 第一轮轮找到最小值，与data[0]交换位置，第二轮找到第二小值，与data[1]交换位置
-            function u(){
-                console.log(data)
-                for(var i=0;i<data.length;i++){
-                    var minPos = i;
-                    for(var j=i;j<data.length;j++){
-                        if(data[j]<data[minPos]){
-                            minPos = j;
-                        }
-                    }
-                    var tmp = data[i];
-                    data[i] = data[minPos];
-                    data[minPos] = tmp;
-                    frames.push([i,minPos]);
-                }
-                console.log(data);
-                setTimeout(ddd,1000);
-            }
-
-            //插入排序 第一项与第二项比较较小，交换位置；增大比较区间，第三项与第二项比较较小，交换位置，在于第一项比较较小，交换位置
-            function z(){
-                var tmp = 0;
-                for(var i=0;i<data.length;i++){
-                    for(var j=i;j>0&&data[j]<data[j-1];j--){
-                        tmp = data[j];
-                        data[j] = data[j-1];
-                        data[j-1] = tmp;
-                        frames.push([j,j-1]);
-                    }
-                }
-                setTimeout(ddd,30);
-            }
-            
-            //快速排序
-//            function sortQuick(array){  
-//                var low=0,high=array.length-1;  
-//                var sort=function(low,high){  
-//                if(low==high){  
-//                   return;  
-//                }  
-//                var key=array[low];  
-//                var tmplow=low;  
-//                var tmphigh=high;  
-//                while(low<high){  
-//                  while(low<high&&key<=array[high]){  
-//                    --high;  
-//                  }  
-//                  array[low]=array[high];  
-//                  while(low<high&&array[low]<=key)  
-//                  {  
-//                     ++low;  
-//                  }  
-//                  array[high]=array[low];  
-//                  if(low==tmplow){  
-//                    sort(++low,tmphigh);  
-//                    return;  
-//                  }  
-//                };  
-//                array[low]=key;  
-//                sort(tmplow,low-1);  
-//                sort(high+1,tmphigh);  
-//                };  
-//                sort(low,high);   
-//                return array;  
-//            }  
-            
-            formBtn.addEventListener("click",function(event){
-                var re = /^[1-9][0-9]$/;
-                if(!re.test(event.target.value)){
-                    if(event.target.value == "左添加"){
-                    leftAdd();
-                    }
-                    if(event.target.value == "右添加"){
+                if(e.target.value == "右添加"){
+                    if(Text.value == ""){
+                        alert("输入框不能为空！")
+                    }else{
                         rightAdd();
                     }
-                    if(event.target.value == "左删除"){
-                        leftDel();
-                    }
-                    if(event.target.value == "右删除"){
-                        rightDel();
-                    }
-                    if(event.target.value == "升序"){
-                        asc();
-                    }
-                    if(event.target.value == "降序"){
-                        desc();
-                    }
                 }
-                if(event.target.value == "乱序"){
-                    x();
+                if(e.target.value == "左删除"){
+                    leftDel();
                 }
-                if(event.target.value == "冒泡"){
-                    y();
+                if(e.target.value == "右删除"){
+                    rightDel();
                 }
-                if(event.target.value == "选择"){
-                    u();
-                }
-                if(event.target.value == "插入"){
-                    z();
-                }
-            })
-        </script>
-    </body>
+            }
+            if(e.target.value == "乱序"){
+                disorder();
+            }
+            if(e.target.value == "冒泡"){
+                bubbleSort();
+            }
+            if(e.target.value == "选择"){
+                selectionSort();
+            }
+            if(e.target.value == "插入"){
+                insertionSort();
+            }
+            if(e.target.value == "快排"){
+                quickSort();
+            }
+        })
+    </script>
+</body>
 </html>

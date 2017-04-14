@@ -1,0 +1,119 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>IFE JavaScript Task 07</title>
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        
+        div{
+            display: flex;
+            justify-content: space-between;
+            border:1px solid black;
+            padding: 20px;
+            margin-right: 20px;
+        }
+        
+        #box{
+            width:780px;
+            margin: 20px;
+        }
+        
+        button{
+            width: 200px;
+            height: 40px;
+            margin-left:20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div class="child_1" >
+            <div class="child_2" >
+                <div class="child_3" ></div>
+                <div class="child_3" ></div>
+                <div class="child_3" ></div>
+            </div>
+            <div class="child_2" ></div>
+            <div class="child_2" >
+                <div class="child_3" ></div>
+            </div>
+        </div>
+        <div class="child_1" >
+            <div class="child_2" >
+                <div class="child_3" ></div>
+            </div>
+            <div class="child_2" ></div>
+        </div>
+        <div class="child_1" ></div>
+    </div>
+    <button id="btn-1">深度优先遍历</button>
+    <button id="btn-2">广度优先遍历</button>
+    
+    <script>
+        var treeRoot = document.getElementById("box"),
+            btn1 = document.getElementById("btn-1"),
+            btn2 = document.getElementById("btn-2"),
+            divList = [],
+            timer = null;
+        
+       function preOrder(node) {
+            if (!(node == null)) {
+                divList.push(node);
+                preOrder(node.firstElementChild);
+                preOrder(node.lastElementChild);
+            }
+        }
+
+        function inOrder(node) {
+            if (!(node == null)) {
+                console.log(divList)
+                inOrder(node.firstElementChild);
+                divList.push(node);
+                inOrder(node.lastElementChild);
+            }
+        }
+
+        function draw(){
+            console.log(divList)
+            var i=0;
+            divList[i].style.backgroundColor = "pink";
+            timer = setInterval(function(){
+                i++;
+                if(i<divList.length){
+                    divList[i-1].style.backgroundColor = "white";
+                    divList[i].style.backgroundColor = "pink";
+                }else{
+                    clearInterval(timer);
+                    divList[divList.length-1].style.backgroundColor = "white";
+                }
+            },500)
+        }
+        
+        function clear(){
+            var divs = document.getElementsByTagName("div");
+            divList = [];
+            clearInterval(timer);
+            for(var i=0;i<divs.length;i++){
+                divs[i].style.backgroundColor = "white";
+            }
+        }
+        
+        window.onload = function(){
+            btn1.onclick = function(){
+                clear();
+                preOrder(treeRoot);
+                draw();
+            }
+            btn2.onclick = function(){
+                clear();
+                inOrder(treeRoot)
+                draw();
+            }
+        }
+    </script>
+</body>
+</html>

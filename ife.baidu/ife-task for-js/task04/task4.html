@@ -51,8 +51,13 @@
                 box2.appendChild(newSpan);
             }
             if(e.target.id == "left-out"){
-                alert(spans[0].innerHTML);
-                box2.removeChild(spans[0]);
+                if(box2.firstChild){
+                    console.log(box2.childNodes)
+                    alert(spans[0].innerHTML);
+                    box2.removeChild(spans[0]);
+                }else{
+                    alert("无可删除元素！")
+                }
             }
             if(e.target.id == "right-out"){
                 alert(spans[spans.length-1].innerHTML);

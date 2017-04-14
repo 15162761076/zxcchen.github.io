@@ -1,0 +1,168 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>IFE JavaScript Task 07</title>
+    <style>
+        div{
+            border:1px solid black;
+            padding: 20px;
+        }
+        
+        #box{
+            position: relative;
+            top:20%;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1000px;
+            
+        }
+        
+        #box>div{
+            flex: 1;
+            margin-right: 5px;
+        }
+        
+        #box .box2{
+            display: flex;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        #box .box2>div{
+            flex: 1;
+            margin-right: 5px;
+        }
+        
+        #btn-box{
+            position: relative;
+            top:30%;
+            left:18%;
+            width: 400px;
+        }
+        
+        #btn-box input{
+            margin-right: 5px;
+            text-align: center;
+            border: 1px solid black;
+            background-color: white;
+        }
+        
+        #btn-box input:hover{
+            background-color: cadetblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div>
+            <div class="box2">
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box2">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div>
+            <div class="box2">
+                <div></div>
+                <div></div>
+            </div>
+            <div class="box2">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="btn-box">
+        <input type="button" value="根-左-右" />
+        <input type="button" value="左-根-右" />
+        <input type="button" value="左-右-根" />
+
+    </div>
+    
+    <script>
+        var treeRoot = document.getElementById("box"),
+            btn1 = document.getElementsByTagName("input")[0],
+            btn2 = document.getElementsByTagName("input")[1],
+            btn3 = document.getElementsByTagName("input")[2],
+            divList = [],
+            timer = null;
+        
+        //前序遍历
+       function preOrder(node) {
+            if (!(node == null)) {
+                divList.push(node);
+                preOrder(node.firstElementChild);
+                preOrder(node.lastElementChild);
+            }k
+        }
+
+        //中序遍历
+        function inOrder(node) {
+            if (!(node == null)) {
+                console.log(divList)
+                inOrder(node.firstElementChild);
+                divList.push(node);
+                inOrder(node.lastElementChild);
+            }
+        }
+
+        //后序遍历
+        function postOrder(node) {
+            if (!(node == null)) {
+                postOrder(node.firstElementChild);
+                postOrder(node.lastElementChild);
+                divList.push(node);
+            }
+        }
+
+        function draw(){
+            console.log(divList)
+            var i=0;
+            divList[i].style.backgroundColor = "pink";
+            timer = setInterval(function(){
+                i++;
+                if(i<divList.length){
+                    divList[i-1].style.backgroundColor = "white";
+                    divList[i].style.backgroundColor = "pink";
+                }else{
+                    clearInterval(timer);
+                    divList[divList.length-1].style.backgroundColor = "white";
+                }
+            },500)
+        }
+        
+        function clear(){
+            var divs = document.getElementsByTagName("div");
+            divList = [];
+            clearInterval(timer);
+            for(var i=0;i<divs.length;i++){
+                divs[i].style.backgroundColor = "white";
+            }
+        }
+        
+        window.onload = function(){
+            btn1.onclick = function(){
+                clear();
+                preOrder(treeRoot);
+                draw();
+            }
+            btn2.onclick = function(){
+                clear();
+                inOrder(treeRoot)
+                draw();
+            }
+            btn3.onclick = function(){
+                clear();
+                postOrder(treeRoot);
+                draw();
+            }
+        }
+    </script>
+</body>
+</html>
