@@ -60,20 +60,33 @@
             divList = [],
             timer = null;
         
-       function preOrder(node) {
-            if (!(node == null)) {
+       function shendu(node){
+            if(node !== null){
                 divList.push(node);
-                preOrder(node.firstElementChild);
-                preOrder(node.lastElementChild);
+                if(node.children){
+                    for(var i=0;i<node.children.length;i++){
+                        shendu(node.children[i]);
+                    }
+                }
             }
         }
-
-        function inOrder(node) {
-            if (!(node == null)) {
-                console.log(divList)
-                inOrder(node.firstElementChild);
-                divList.push(node);
-                inOrder(node.lastElementChild);
+        
+        function guangdu(node){
+            var tmp = [];
+            divList.push(node);
+            if(node.children){
+                for(var i=0;i<node.children.length;i++){
+                    divList.push(node.children[i]);
+                    tmp.push(node.children[i]);
+                }
+            }
+            
+            while(0<tmp.length){
+                var tmpJ = tmp.shift();
+                for(var k=0;k<tmpJ.children.length;k++){
+                    divList.push(tmpJ.children[k]);
+                    tmp.push(tmpJ.children[k]);
+                }
             }
         }
 
@@ -105,12 +118,12 @@
         window.onload = function(){
             btn1.onclick = function(){
                 clear();
-                preOrder(treeRoot);
+                shendu(treeRoot);
                 draw();
             }
             btn2.onclick = function(){
                 clear();
-                inOrder(treeRoot)
+                guangdu(treeRoot)
                 draw();
             }
         }
