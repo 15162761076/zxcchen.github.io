@@ -1,0 +1,148 @@
+
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>IFE baidu task24</title>
+    <style>
+        *{
+            margin:0px;
+            padding:0px;
+        }
+        
+        div{
+            display: flex;
+            justify-content: space-between;
+            border:1px solid black;
+            padding: 20px;
+            margin-right: 20px;
+        }
+        
+        #box{
+            width:780px;
+            margin: 20px;
+        }
+        
+        button{
+            width: 200px;
+            height: 40px;
+            margin-left:20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="box" class="child_box">
+        <div class="child_1" >
+            <div class="child_2" >
+                <div class="child_3" ></div>
+                <div class="child_3" ></div>
+                <div class="child_3" ></div>
+            </div>
+            <div class="child_2" ></div>
+            <div class="child_2" >
+                <div class="child_3" ></div>
+            </div>
+        </div>
+        <div class="child_1" >
+            <div class="child_2" >
+                <div class="child_3" ></div>
+            </div>
+            <div class="child_2" ></div>
+        </div>
+        <div class="child_1" ></div>
+    </div>
+    <button>深度优先遍历</button>
+    <button>添加节点</button>
+    <button>删除节点</button>
+    <script>
+        var btn1 = document.getElementsByTagName("button")[0],
+            btn2 = document.getElementsByTagName("button")[1],
+            btn3 = document.getElementsByTagName("button")[2];
+        var treeRoot = document.getElementById("box"),
+            divs = document.getElementsByTagName("div");
+        var divList = [],
+            found = [];
+        var timer = null,
+            selected = null;
+        
+        window.onload = function(){
+            btn1.onclick = function(){
+                clear();
+                shendu(treeRoot);
+                draw();
+            }
+            
+            treeRoot.onclick = function(event){
+                clear();
+                for(var i=0;i<divs.length;i++){
+                    divs[i].style.backgroundColor = "white";
+                }
+                event.target.style.backgroundColor = "green";
+                selected = event.target;
+            }
+            
+            btn2.onclick = function(event){
+                foundDiv(event.target);
+            }
+            
+            btn3.onclick = function(event){
+                foundDiv(event.target);
+            }
+        }
+        
+        function shendu(node){
+            if(node !== null){
+                divList.push(node);
+                if(node.children){
+                    for(var i=0;i<node.children.length;i++){
+                        shendu(node.children[i]);
+                    }
+                }
+            }
+        }
+        
+        function foundDiv(e){
+            if(selected===null){
+                return ;
+            }
+            var parentDiv;
+            if(e.innerHTML == "添加节点"){
+                var newDiv = document.createElement("div");
+                if(selected.nextSibling!=null){
+                   selected.parentElement.insertBefore(newDiv,selected.nextSibling);
+                }else{
+                    selected.parentElement.appendChild(newDiv);
+                }
+            }else{
+                selected.parentElement.removeChild(selected);
+                selected = null;            
+            }
+        }
+        
+        function draw(){
+            var i=0;
+            divList[i].style.backgroundColor = "pink";
+            timer = setInterval(function(){
+                i++;
+                if(i<divList.length){
+                    divList[i-1].style.backgroundColor = "white";
+                    divList[i].style.backgroundColor = "pink";
+                }else{
+                    clearInterval(timer);
+                    divList[divList.length-1].style.backgroundColor = "white";
+                }
+            },500)
+            
+        }
+        
+        function clear(){
+            divList = [];
+            clearInterval(timer);
+            for(var i=0;i<divs.length;i++){
+                divs[i].style.backgroundColor = "white";
+            }
+        }
+    </script>
+</body>
+</html>
