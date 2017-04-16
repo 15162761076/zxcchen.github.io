@@ -1,9 +1,8 @@
-
 <!DOCTYPE>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>IFE baidu task24</title>
+    <meta charset="UTF-8" />
+    <title>IFE JavaScript Task 09</title>
     <style>
         *{
             margin:0px;
@@ -28,11 +27,10 @@
             height: 40px;
             margin-left:20px;
         }
-        
     </style>
 </head>
 <body>
-    <div id="box" class="child_box">
+    <div id="box">
         <div class="child_1" >
             <div class="child_2" >
                 <div class="child_3" ></div>
@@ -52,76 +50,57 @@
         </div>
         <div class="child_1" ></div>
     </div>
-    <button>深度优先遍历</button>
-    <button>添加节点</button>
-    <button>删除节点</button>
+    <button id="bfs">广度优先遍历</button>
+    <button id="add">添加节点</button>
+    <button id="del">删除节点</button>
+    
     <script>
-        var btn1 = document.getElementsByTagName("button")[0],
-            btn2 = document.getElementsByTagName("button")[1],
-            btn3 = document.getElementsByTagName("button")[2];
         var treeRoot = document.getElementById("box"),
-            divs = document.getElementsByTagName("div");
-        var divList = [],
-            found = [];
-        var timer = null,
-            selected = null;
-        
-        window.onload = function(){
-            btn1.onclick = function(){
-                clear();
-                shendu(treeRoot);
-                draw();
-            }
+            divList = [],
+            bfsBtn = document.getElementById("bfs"),
+            addBtn = document.getElementById("add"),
+            delBtn = document.getElementById("del"),
+            divs = document.getElementsByTagName("div"),
+            checkDiv,
+            timer;
             
-            treeRoot.onclick = function(event){
-                clear();
-                for(var i=0;i<divs.length;i++){
-                    divs[i].style.backgroundColor = "white";
-                }
-                event.target.style.backgroundColor = "green";
-                selected = event.target;
-            }
-            
-            btn2.onclick = function(event){
-                foundDiv(event.target);
-            }
-            
-            btn3.onclick = function(event){
-                foundDiv(event.target);
-            }
-        }
-        
-        function shendu(node){
-            if(node !== null){
+        function bfs(node){
+            if(node != null){
+                var tmpK = [];
                 divList.push(node);
-                if(node.children){
-                    for(var i=0;i<node.children.length;i++){
-                        shendu(node.children[i]);
+                for(var i=0;i<node.children.length;i++){
+                    divList.push(node.children[i]);
+                    tmpK.push(node.children[i]);
+                }
+                while(tmpK.length>0){
+                    var tmpL = tmpK.shift();
+                    for(var j=0;j<tmpL.children.length;j++){
+                        divList.push(tmpL.children[j]);
+                        tmpK.push(tmpL.children[j]);
                     }
                 }
             }
         }
         
-        function foundDiv(e){
-            if(selected===null){
-                return ;
-            }
-            var parentDiv;
-            if(e.innerHTML == "添加节点"){
+        function foundDiv(btn){
+            
+            if(btn.innerHTML == "添加节点"){
                 var newDiv = document.createElement("div");
-                if(selected.nextSibling!=null){
-                   selected.parentElement.insertBefore(newDiv,selected.nextSibling);
+                newDiv.style.backgroundColor = "yellow";    
+                if(checkDiv.nextSibling != null){
+                    checkDiv.parentElement.insertBefore(newDiv,checkDiv.nextSibling);
                 }else{
-                    selected.parentElement.appendChild(newDiv);
+                    checkDiv.parentElement.appendChild(newDiv);
                 }
-            }else{
-                selected.parentElement.removeChild(selected);
-                selected = null;            
+            }
+            
+            if(btn.innerHTML == "删除节点"){
+                checkDiv.parentElement.removeChild(checkDiv);
             }
         }
         
         function draw(){
-            var i=0;
+            var i = 0;
             divList[i].style.backgroundColor = "pink";
             timer = setInterval(function(){
                 i++;
@@ -133,14 +112,38 @@
                     divList[divList.length-1].style.backgroundColor = "white";
                 }
             },500)
-            
         }
         
         function clear(){
+            var divs = document.getElementsByTagName("div");
             divList = [];
-            clearInterval(timer);
             for(var i=0;i<divs.length;i++){
                 divs[i].style.backgroundColor = "white";
+            }
+        }
+        
+        
+        window.onload = function(){
+            bfsBtn.onclick = function(){
+                clear();
+                bfs(treeRoot);
+                draw();
+            };
+            
+            treeRoot.onclick = function(e){
+                checkDiv = e.target;
+                for(var i=0;i<divs.length;i++){
+                    divs[i].style.backgroundColor = "white";
+                }
+                checkDiv.style.backgroundColor = "green";
+            };
+            
+            addBtn.onclick = function(e){
+                foundDiv(e.target);
+            };
+            
+            delBtn.onclick = function(e){
+                foundDiv(e.target);
             }
         }
     </script>

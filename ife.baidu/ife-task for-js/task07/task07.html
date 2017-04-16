@@ -60,6 +60,7 @@
             <div class="box2">
                 <div></div>
                 <div></div>
+                
             </div>
         </div>
         <div>
@@ -86,28 +87,27 @@
         
         //前序遍历
        function preOrder(node) {
-            if (!(node == null)) {
+            if (node != null) {
                 divList.push(node);
-                preOrder(node.firstElementChild);
-                preOrder(node.lastElementChild);
+                preOrder(node.children[0]);
+                preOrder(node.children[1]);
             };
         }
 
         //中序遍历
         function inOrder(node) {
             if (!(node == null)) {
-                console.log(divList)
-                inOrder(node.firstElementChild);
+                inOrder(node.children[0]);
                 divList.push(node);
-                inOrder(node.lastElementChild);
+                inOrder(node.children[1]);
             }
         }
 
         //后序遍历
         function postOrder(node) {
             if (!(node == null)) {
-                postOrder(node.firstElementChild);
-                postOrder(node.lastElementChild);
+                postOrder(node.children[0]);
+                postOrder(node.children[1]);
                 divList.push(node);
             }
         }

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>IFE JavaScript Task 07</title>
+    <title>IFE JavaScript Task 08</title>
     <style>
         *{
             margin:0px;
@@ -50,58 +50,56 @@
         </div>
         <div class="child_1" ></div>
     </div>
-    <button id="btn-1">深度优先遍历</button>
-    <button id="btn-2">广度优先遍历</button>
+    <button id="dfs">深度优先遍历</button>
+    <button id="bfs">广度优先遍历</button>
     
     <script>
         var treeRoot = document.getElementById("box"),
-            btn1 = document.getElementById("btn-1"),
-            btn2 = document.getElementById("btn-2"),
             divList = [],
-            timer = null;
-        
-       function shendu(node){
-            if(node !== null){
+            dfsBtn = document.getElementById("dfs"),
+            bfsBtn = document.getElementById("bfs"),
+            timer;
+            
+        function dfs(node){
+            if(node != null){
                 divList.push(node);
-                if(node.children){
-                    for(var i=0;i<node.children.length;i++){
-                        shendu(node.children[i]);
-                    }
+                for(var i=0;i<node.children.length;i++){
+                    dfs(node.children[i])
                 }
             }
         }
         
-        function guangdu(node){
-            var tmp = [];
-            divList.push(node);
-            if(node.children){
+        function bfs(node){
+            if(node != null){
+                var tmpK = [];
+                divList.push(node);
                 for(var i=0;i<node.children.length;i++){
                     divList.push(node.children[i]);
-                    tmp.push(node.children[i]);
+                    tmpK.push(node.children[i]);
                 }
-            }
-            
-            while(0<tmp.length){
-                var tmpJ = tmp.shift();
-                for(var k=0;k<tmpJ.children.length;k++){
-                    divList.push(tmpJ.children[k]);
-                    tmp.push(tmpJ.children[k]);
+                while(tmpK.length>0){
+                    var tmpL = tmpK.shift();
+                    for(var j=0;j<tmpL.children.length;j++){
+                        divList.push(tmpL.children[j]);
+                        tmpK.push(tmpL.children[j]);
+                    }
                 }
             }
         }
 
         function draw(){
-            console.log(divList)
-            var i=0;
+            var i = 0;
             divList[i].style.backgroundColor = "pink";
             timer = setInterval(function(){
                 i++;
                 if(i<divList.length){
                     divList[i-1].style.backgroundColor = "white";
                     divList[i].style.backgroundColor = "pink";
+                    console.log(divList[i])
                 }else{
                     clearInterval(timer);
                     divList[divList.length-1].style.backgroundColor = "white";
+                    console.log(divList[divList.length-1])
                 }
             },500)
         }
@@ -109,23 +107,23 @@
         function clear(){
             var divs = document.getElementsByTagName("div");
             divList = [];
-            clearInterval(timer);
             for(var i=0;i<divs.length;i++){
                 divs[i].style.backgroundColor = "white";
             }
         }
         
+        
         window.onload = function(){
-            btn1.onclick = function(){
+            dfsBtn.onclick = function(){
                 clear();
-                shendu(treeRoot);
+                dfs(treeRoot);
                 draw();
-            }
-            btn2.onclick = function(){
+            };
+            bfsBtn.onclick = function(){
                 clear();
-                guangdu(treeRoot)
+                bfs(treeRoot); 
                 draw();
-            }
+            };
         }
     </script>
 </body>
