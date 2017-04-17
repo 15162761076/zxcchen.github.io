@@ -9,24 +9,43 @@
             width: 500px;
         }
         
+        table{
+            width: 100%;
+        }
+        
         table tr{
             line-height: 30px;
         }
         
         table tr td:first-child{
-            width: 40%;
+            width: 30%;
             text-align: right;
         }
         
-        form fieldset table tr:last-child input{
-            margin-right: 120px;
+        table tr:last-child td{
+            text-align:center;
+        }
+        
+        table tr:last-child td input{
             width: 100px;
         }
         
-        form fieldset table tr:last-child input:first-child{
-            margin-right: 10px;
+        table .verify-item td:nth-of-type(2){
+            width: 40%;
         }
         
+        table .verify-item td:last-child{
+            width: 30%;
+            text-align: left;
+        }
+        
+        table .verify-item td input{
+            width: 100%;
+        }
+        
+        table textarea{
+            width: 50%;
+        }
     </style>
 </head>
 <body>
@@ -35,50 +54,54 @@
             <legend>表单验证</legend>
             <table>
                 <tbody>
-                    <tr>
+                    <tr class="verify-item">
                         <td>
                             <label for="ID">账户</label>
                         </td>
                         <td>
                             <input type="text" id="ID" name="name"/>
                         </td>
+                        <td class="verify-icon"></td>
                     </tr>
-                    <tr>
+                    <tr class="verify-item">
                         <td>
                             <label for="password">密码</label>
                         </td>
                         <td>
                             <input type="password" id="password" name="password"/>
                         </td>
+                        <td class="verify-icon"></td>
                     </tr>
-                    <tr>
+                    <tr class="verify-item">
                         <td>
                             <label for="password1">请再次输入密码</label>
                         </td>
                         <td>
                             <input type="password" id="password1" name="password1" />
                         </td>
+                        <td class="verify-icon"></td>
                     </tr>
-                    <tr>
+                    <tr class="verify-item">
                         <td>
                             <label for="email">邮箱</label>
                         </td>
                         <td>
                             <input type="email" id="email" name="email"/>
                         </td>
+                        <td class="verify-icon"></td>
                     </tr>
                     <tr>
                         <td>
                             <label for="sex1">性别</label>
                         </td>
-                        <td>
-                            <input type="radio" id="sex1" name="sex"/>男
-                            <input type="radio" id="sex2" name="sex"/>女
+                        <td colspan="2">
+                            <label><input type="radio" id="sex1" name="sex" checked="check"/>男</label>
+                            <label><input type="radio" id="sex2" name="sex"/>女</label>
                         </td>
                     </tr>
                     <tr>
                         <td>地区</td>
-                        <td>
+                        <td colspan="2">
                             <select>
                                 <option value="beijing">北京</option>
                                 <option value="shanghai">上海</option>
@@ -88,21 +111,22 @@
                     </tr>
                     <tr>
                         <td>简介</td>
-                        <td><textarea></textarea></td>
+                        <td colspan="2"><textarea></textarea></td>
                     </tr>
                     <tr>
                         <td>兴趣</td>
-                        <td><input type="checkbox" name="read"/>读书
+                        <td colspan="2">
+                            <input type="checkbox" name="read" checked="check" />读书
                             <input type="checkbox" name="sport"/>运动
                             <input type="checkbox" name="music"/>音乐
                         </td>
                     </tr>
                     <tr>
                         <td>上传:</td>
-                        <td><input type="file" name="upload"/></td>
+                        <td colspan="2"><input type="file" name="upload"/></td>
                     </tr>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             <input type="submit" value="提交" />
                             <input type="reset" value="重置" />
                         </td>
