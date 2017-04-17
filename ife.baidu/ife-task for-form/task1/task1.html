@@ -22,8 +22,8 @@
             text-align: right;
         }
         
-        table tr:last-child td{
-            text-align:center;
+        table tr:last-child td{        
+            text-align:center;          
         }
         
         table tr:last-child td input{
@@ -43,8 +43,9 @@
             width: 100%;
         }
         
-        table textarea{
-            width: 50%;
+        table textarea,
+        table tr select{
+            width:58%;
         }
     </style>
 </head>
@@ -137,7 +138,13 @@
     </form>
 
     <script type="text/javascript">
-
+        var verifyItem = document.getElementsByClassName("verify-item"),
+            vertfyIcon = document.getElementsByClassName("verify-icon");
+        
+        function checking(something){
+            
+        }
+        
         //与本次作业无关
         //封装JS对象
         function Person(name,age,sex){
