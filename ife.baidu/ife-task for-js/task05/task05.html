@@ -50,7 +50,11 @@
             formBtn = document.getElementById("form_Btn"),
             formChart = document.getElementById("form_Chart"),
             data = [],
+            bakdata = [],
             frames=[];
+        const TIMEOUT = 1000;
+        
+        var timeoutHandler = null;
         
         function draw(){
             var span = document.createElement("span"),
@@ -94,29 +98,46 @@
         function disorder(){
             formChart.innerHTML = "<div></div>";
             data.length = 0;
-            for(var i=0;i<60;i++){
+            bakdata.length = 0;
+            for(var i=0;i<10;i++){
                 var span = document.createElement("span"),
                     tmpK = Math.floor(Math.random()*(100-10+1)+10);
                 span.style.height = tmpK + "px";
                 formChart.appendChild(span);
                 data.push(tmpK);
+                bakdata.push(tmpK);
             }
         }
-        
+
         function show(){
             if(frames.length == 0){
                 return;
-            } 
+            }
             
             var s = document.getElementsByTagName("span"),
-                dd = frames.shift(),
-                d1 = dd[0],
-                d2 = dd[1],
-                tmp = s[d1].style.height;
-            
-            s[d1].style.height = s[d2].style.height;
-            s[d2].style.height = tmp;
-            setTimeout(show,200);
+                dd = frames.shift();
+            for(var i=0;i<s.length;i++){
+                s[i].style.backgroundColor = "pink";
+            }
+            if(dd.type == 3){ //交换展示
+                var d1 = dd.posA,d2=dd.posB;
+                s[d1].style.backgroundColor="orange";
+                s[d2].style.backgroundColor="orange";
+            }else if(dd.type == 1){ //交换位置
+                var d1 = dd.posA,d2=dd.posB;
+                var tmp = s[d1].style.height;
+                s[d1].style.height = s[d2].style.height;
+                s[d2].style.height = tmp;
+                s[d1].style.backgroundColor = "pink";
+                s[d2].style.backgroundColor = "yellow";
+                tmp = bakdata[d1];
+                bakdata[d1] = bakdata[d2];
+                bakdata[d2] = tmp;
+            }else if(dd.type == 2){ //前进
+                var d1 = dd.pos;
+                s[d1].style.backgroundColor = "yellow";
+            }
+            timeoutHandler = setTimeout(show,TIMEOUT);
         }
         
         //冒泡排序，两项之间进行比较，较大项顺序向后交换
@@ -128,27 +149,36 @@
                     if(data[j]>data[j+1]){
                         data[j] = data[j+1];
                         data[j+1] = min;
-                        frames.push([j,j+1]);
+                        frames.push({"type":3,"posA":j,"posB":j+1}); //交换展示动作
+                        frames.push({"type":1,"posA":j,"posB":j+1}); //交换动作,pos 表示需要交换的位置
+                    }else{
+                        frames.push({"type":2,"pos":j}); //前进动作，pos  表示当前的位置
                     }
                 }
             }
-            setTimeout(show,200);
+            timeoutHandler = setTimeout(show,TIMEOUT);
         }
         
         //选择排序，第一轮找到最小值，与data[0]交换位置，第二轮找到最小值，与data[1]交换位置
         function selectionSort(){
-            var min = 0;
+            var minPos;
             for(var i=0;i<data.length;i++){
+                minPos = i;
                 for(var j=i;j<data.length;j++){
-                    min = data[i];
-                    if(data[j]<data[i]){
-                        data[i] = data[j];
-                        data[j] = min;
-                        frames.push([i,j])
+                    if(data[j]<data[minPos]){
+                        minPos = j;
                     }
+                    frames.push({"type":2,"pos":j}); //前进动作，pos  表示当前的位置
+                }
+                if(minPos!=i){
+                    var tmp = data[minPos];
+                    data[minPos] = data[i];
+                    data[i] = tmp;
+                    frames.push({"type":3,"posA":i,"posB":minPos}); //交换展示动作
+                    frames.push({"type":1,"posA":i,"posB":minPos}); //交换动作,pos 表示需要交换的位置
                 }
             }
-            setTimeout(show,200)
+            timeoutHandler = setTimeout(show,TIMEOUT)
         }
         
         //插入排序 第一项与第二项比较,较小，交换位置；增大比较区间，第三项与第二项比较较小，交换位置，在于第一项比较较小，交换位置
@@ -160,11 +190,12 @@
                     if(data[j]<data[j-1]){
                         data[j] = data[j-1];
                         data[j-1] = min;
-                        frames.push([j-1,j])
+                        frames.push({"type":3,"posA":j-1,"posB":j}); //交换展示动作
+                        frames.push({"type":1,"posA":j-1,"posB":j}); //交换动作,pos 表示需要交换的位置
                     }
                 }
             }
-            setTimeout(show,200);
+            timeoutHandler = setTimeout(show,TIMEOUT);
         }
         
         //快排 第一轮从数组中选择一个基准数，将数组分为两组，大于基准数，小于基准数
@@ -196,7 +227,7 @@
                 sort(high+1,tmpHigh);
             };
             sort(low,high);
-            setTimeout(show,200);
+            timeoutHandler = setTimeout(show,TIMEOUT);
         }
         
         
@@ -224,9 +255,14 @@
                     rightDel();
                 }
             }
+            if(timeoutHandler!=null){
+                clearTimeout(timeoutHandler);
+            }
+            frames = [];
             if(e.target.value == "乱序"){
                 disorder();
             }
+            data = bakdata.slice(0);
             if(e.target.value == "冒泡"){
                 bubbleSort();
             }
@@ -239,6 +275,7 @@
             if(e.target.value == "快排"){
                 quickSort();
             }
+            
         })
     </script>
 </body>

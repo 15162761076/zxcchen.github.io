@@ -1,0 +1,206 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE form Task 01</title>
+    <style>
+        form{
+            margin-left: auto;
+            margin-right: auto;
+            width: 500px;
+        }
+        
+        table tr{
+            line-height: 30px;
+        }
+        
+        table tr td:first-child{
+            width: 40%;
+            text-align: right;
+        }
+        
+        form fieldset table tr:last-child input{
+            margin-right: 120px;
+            width: 100px;
+        }
+        
+        form fieldset table tr:last-child input:first-child{
+            margin-right: 10px;
+        }
+        
+    </style>
+</head>
+<body>
+    <form method="post" >
+        <fieldset>
+            <legend>表单验证</legend>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="ID">账户</label>
+                        </td>
+                        <td>
+                            <input type="text" id="ID" name="name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="password">密码</label>
+                        </td>
+                        <td>
+                            <input type="password" id="password" name="password"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="password1">请再次输入密码</label>
+                        </td>
+                        <td>
+                            <input type="password" id="password1" name="password1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="email">邮箱</label>
+                        </td>
+                        <td>
+                            <input type="email" id="email" name="email"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="sex1">性别</label>
+                        </td>
+                        <td>
+                            <input type="radio" id="sex1" name="sex"/>男
+                            <input type="radio" id="sex2" name="sex"/>女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>地区</td>
+                        <td>
+                            <select>
+                                <option value="beijing">北京</option>
+                                <option value="shanghai">上海</option>
+                                <option value="guangzhou">广州</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>简介</td>
+                        <td><textarea></textarea></td>
+                    </tr>
+                    <tr>
+                        <td>兴趣</td>
+                        <td><input type="checkbox" name="read"/>读书
+                            <input type="checkbox" name="sport"/>运动
+                            <input type="checkbox" name="music"/>音乐
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>上传:</td>
+                        <td><input type="file" name="upload"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="提交" />
+                            <input type="reset" value="重置" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </fieldset>
+    </form>
+
+    <script type="text/javascript">
+
+        //与本次作业无关
+        //封装JS对象
+        function Person(name,age,sex){
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+        }
+        
+        Person.prototype = {
+            constructor:Person,
+            sayHello:function(){
+                console.log("hello");
+            }
+        }
+        
+        //以上方式比较常见，较为直观，但是Person()的职责是构造对象，如果把初始化的事情也放在里面完成，代码就会显得繁琐，建议放在一个方法里初始化。
+        function Person1(info){
+            this._init_(info);
+        }
+        
+        Person1.prototype = {
+            constructor:Person1,
+            _init_:function(info){
+                this.name = name;
+                this.age = age;
+                this.sex = sex;
+            },
+            sayHello:function(){
+                console.log("hello");
+            }
+        }
+        //以上会发现name,age,sex并没有在Person1里面申明，怎么体现的呢？
+        
+        //new的执行原理
+        //首先通过var o = {}构造一个空对象
+        //然后将构造函数的原型属性prototype赋值给o的原型对象_proto_
+        //在执行this.init(info);时，对象o就可以在其原型对象中查找_init_方法
+        var myNew = function(constructor,args){
+            var o = {};
+            o.__proto__ = constructor.prototype;
+            //以o为上下文调用函数，同时将参数作为数组传递，使得o也拥有了自己的name,age,sex属性
+            var res = constructor.apply(o,args);
+            var typr = typeof res;
+            if(['string','number','boolean','null','undefined'].indexOf(type) != -1){
+                return o;
+            }
+            return res;
+        }
+        
+        //类jQuery封装，jquery对象具有很强的集成性，可以作为函数及对象调用，当作为函数调用的时候，无需通过new便可返回它的实例
+        //将对象的构造函数操作放在函数的里面，而自己充当一个工厂。
+        var Person2 = (function(window){
+            var Person2 = function(info){
+                return new Person2.prototype.init(info);
+            }
+
+            //但是不断调用prototype并不是一个直观的做法
+            /*
+            Person2.prototype = {
+                constructor:Person2,
+                init:function(){
+                    this.name = info.name;
+                }
+            }
+
+            Person2.prototype.init.prototype = Person2.prototype;
+            */
+
+            //建议这样做
+            Person2.fn = Person2.prototype = {
+                constructor:Person2,
+                init:function(){
+                    this.name = info.name;
+                    this.sayHello = function(){
+                        this.makeArray();
+                    }
+                },
+                makeArray:function(){
+                    console.log(this.name);
+                }
+            }
+
+            //以下虽然把makeArray等常用的方法挂载到Person2.prototype下，但还是会被init这个实例使用。
+            Person2.fn.init.prototype = Person2.fn;
+            
+            return Person2;
+        })();
+    </script>
+</body>
+</html>
