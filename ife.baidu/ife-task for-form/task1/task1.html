@@ -6,7 +6,9 @@
         form{
             margin-left: auto;
             margin-right: auto;
-            width: 500px;
+            width: 400px;
+            font-size: 14px;
+            font-family: "宋体";
         }
         
         table{
@@ -18,78 +20,107 @@
         }
         
         table tr td:first-child{
-            width: 30%;
+            width: 40%;
             text-align: right;
         }
         
         table tr:last-child td{        
-            text-align:center;          
+            text-align:center;            
         }
         
         table tr:last-child td input{
-            width: 100px;
-        }
-        
-        table .verify-item td:nth-of-type(2){
-            width: 40%;
+            width: 100px;           
         }
         
         table .verify-item td:last-child{
-            width: 30%;
             text-align: left;
+            font-size: 14px;           
         }
         
         table .verify-item td input{
             width: 100%;
         }
         
+        table .verify-item+tr{
+            line-height: 12px;
+            font-size: 12px;
+        }
+        
         table textarea,
         table tr select{
-            width:58%;
+            width: 100%;
         }
+        
     </style>
 </head>
 <body>
-    <form method="post" >
+    <form>
         <fieldset>
             <legend>表单验证</legend>
-            <table>
+            <table id="box">
                 <tbody>
                     <tr class="verify-item">
                         <td>
-                            <label for="ID">账户</label>
+                            <label for="h1">账户</label>
                         </td>
                         <td>
-                            <input type="text" id="ID" name="name"/>
+                            <input type="text" class="verify-input" id="h1" name="name" placeholder="必填，长度为4-16位中英字符及数字" />
                         </td>
-                        <td class="verify-icon"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="verify-icon"><span id="t1"></span></td>
+                    </tr>
+                    
+                    <tr class="verify-item">
+                        <td>
+                            <label for="h2">密码</label>
+                        </td>
+                        <td>
+                            <input type="password" id="h2" class="verify-input" name="password" placeholder="必填，长度为4-16位中英字符及数字" />
+                        </td>                       
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="verify-icon"><span id="t2"></span></td>
+                    </tr>
+                    
+                    <tr class="verify-item">
+                        <td>
+                            <label for="h3">请再次输入密码</label>
+                        </td>
+                        <td>
+                            <input type="password" id="h3" class="verify-input" name="password1" placeholder="必填，密码必须一致" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="verify-icon"><span id="t3"></span></td>
+                    </tr>
+                    
+                    <tr class="verify-item">
+                        <td>
+                            <label for="h4">邮箱</label>
+                        </td>
+                        <td>
+                            <input type="text" class="verify-input" id="h4" name="email" placeholder="必填，填写正确的邮箱格式" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td class="verify-icon"><span id="t4"></span></td>
                     </tr>
                     <tr class="verify-item">
                         <td>
-                            <label for="password">密码</label>
+                            <label for="h5">手机</label>
                         </td>
                         <td>
-                            <input type="password" id="password" name="password"/>
+                            <input type="text" class="verify-input" id="h5" name="phonenumber" placeholder="必填，长度为11为数字" />
                         </td>
-                        <td class="verify-icon"></td>
                     </tr>
-                    <tr class="verify-item">
-                        <td>
-                            <label for="password1">请再次输入密码</label>
-                        </td>
-                        <td>
-                            <input type="password" id="password1" name="password1" />
-                        </td>
-                        <td class="verify-icon"></td>
-                    </tr>
-                    <tr class="verify-item">
-                        <td>
-                            <label for="email">邮箱</label>
-                        </td>
-                        <td>
-                            <input type="email" id="email" name="email"/>
-                        </td>
-                        <td class="verify-icon"></td>
+                    <tr>
+                        <td></td>
+                        <td class="verify-icon"><span id="t5"></span></td>
                     </tr>
                     <tr>
                         <td>
@@ -128,22 +159,81 @@
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <input type="submit" value="提交" />
-                            <input type="reset" value="重置" />
+                            <input type="submit" value="提交" id="submit"/>
+                            <input type="reset" value="重置" id="reset"/>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </fieldset>
     </form>
-
+    
     <script type="text/javascript">
-        var verifyItem = document.getElementsByClassName("verify-item"),
-            vertfyIcon = document.getElementsByClassName("verify-icon");
+        var validationData = [
+            {regexp:/^[a-zA-Z0-9_]{4,16}$/,right:"名称格式正确",wrong:"名称格式有误",ispassed:"false"},
+            {regexp:/^\S{4,16}$/,right:"密码可用",wrong:"密码不可用",ispassed:"false"},
+            {regexp:/^\S{4,16}$/,right:"密码输入一致",wrong:"密码输入不一致",ispassed:"false"},
+            {regexp:/^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$ /,right:"邮箱格式正确",wrong:"邮箱格式有误",ispassed:"false"},
+            {regexp:/^1\d{10}$/,right:"手机格式正确",wrong:"手机格式有误",ispassed:"false"},
+        ];
         
-        function checking(something){
-            
+        var Event = function(node,event,func){
+            if(node.addEventListener){
+                node.addEventListener(event,func);
+            }else if(node.attachEvent){
+                node.attachEvent("on"+event,func);
+            }else{
+                node["on"+event] = func;
+            }
         }
+        
+        function verifyValue(number){
+            var flag = false,
+                input = document.getElementById("h"+number),
+                span = document.getElementById("t"+number),
+                result = validationData[number-1].regexp.test(input.value);
+            
+            switch(parseInt(number)){
+                case 1:
+                    flag = result;
+                    break;
+                case 2:
+                    flag = result;
+                    break;
+                case 3:
+                    if(document.getElementById("h2").value == input.value && result){
+                        flag = true;
+                    }else{
+                        flag = false;
+                    }
+                    
+                    break;
+                case 4:
+                    flag = result;
+                    break;
+                case 5:
+                    flag = result;
+                    break;
+            }
+            
+            if(flag){
+                span.innerHTML = validationData[number-1].right;
+                span.style.color = "green";
+            }else{
+                span.innerHTML = validationData[number-1].wrong;
+                span.style.color = "red";
+            }
+        }
+        
+        Event(document.getElementById("submit"),"click",function(event){
+            event.preventDefault();
+            
+            var itemInput = document.getElementsByClassName("verify-input");
+            for(var i=0;i<itemInput.length;i++){
+                var input = itemInput[i].getAttribute("id").slice(1);
+                verifyValue(input);
+            }
+        })
         
         //与本次作业无关
         //封装JS对象
