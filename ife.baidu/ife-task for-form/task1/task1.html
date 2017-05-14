@@ -277,7 +277,7 @@
             o.__proto__ = constructor.prototype;
             //以o为上下文调用函数，同时将参数作为数组传递，使得o也拥有了自己的name,age,sex属性
             var res = constructor.apply(o,args);
-            var typr = typeof res;
+            var type = typeof res;
             if(['string','number','boolean','null','undefined'].indexOf(type) != -1){
                 return o;
             }
@@ -299,7 +299,7 @@
                     this.name = info.name;
                 }
             }
-
+            
             Person2.prototype.init.prototype = Person2.prototype;
             */
 

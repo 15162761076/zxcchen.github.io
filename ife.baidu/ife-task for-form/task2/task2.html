@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ife baidu form task2</title>
+    <style>
+        div {
+            border: 1px solid black;
+            margin: 20px;
+            padding: 20px;
+        }
+        table{
+            width:100%;
+            border-collapse: collapse;
+            border:none;
+        }
+        td{
+            border:1px solid black;
+        }
+        
+        input{
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form>
+        <fieldset>
+            <legend>表单</legend>
+            <table id="form-box">
+
+            </table>
+        </fieldset>
+    </form>
+</div>
+<script>
+    var formBox = document.getElementById("form-box");
+    //        var text = {
+    //            label: "标签",
+    //            type: "按钮类型",
+    //            name: "文本类型",
+    //            id: "id",
+    //            validator: "验证规则",
+    //            tips: "必填,4-16字符",
+    //            success: "成功提示",
+    //            fail: "失败提示",
+    //            ispassed: "false"
+    //        };
+    var text = {
+        "name": {
+            label: "用户名",
+            type: "text",
+            name: "name",
+            id: "name",
+            validator: /^[a-zA-Z0-9_]{4,16}$/,
+            tips: "必填,4-16字符",
+            success: "名称格式正确",
+            fail: "名称格式错误",
+            ispassed: "false"
+        },
+        "password": {
+            label: "密码",
+            type: "password",
+            name: "password",
+            id: "password",
+            validator: /^\S{4,16}/,
+            tips: "必填,4-16数字",
+            success: "密码可以",
+            fail: "密码不可用",
+            ispassed: "false"
+        }
+    };
+
+    var validationData = {
+        "name": {
+            label: "用户名",
+            type: "text",
+            name: "name",
+            id: "name",
+            validator: /^[a-zA-Z0-9_]{4,16}$/,
+            tips: "必填,4-16字符",
+            success: "名称格式正确",
+            fail: "名称格式错误",
+            ispassed: "false"
+        },
+        "password": {
+            label: "密码",
+            type: "password",
+            name: "password",
+            id: "password",
+            validator: /^\S{4,16}/,
+            tips: "必填,4-16数字",
+            success: "密码可以",
+            fail: "密码不可用",
+            ispassed: "false"
+        },
+        "confirmPassword": {
+            label: "确认密码",
+            type: "password",
+            name: "password1",
+            id: "password1",
+            validator: /^\S{4,16}$/,
+            tips: "必填,4-16数字",
+            success: "密码验证一致",
+            fail: "密码验证不一致",
+            ispassed: "false"
+        }
+        ,
+        "email": {
+            label: "邮箱",
+            type: "text",
+            name: "email",
+            id: "email",
+            validator: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}/,
+            tips: "必填,请填写正确的邮箱",
+            success: "邮箱格式正确",
+            fail: "邮箱格式错误",
+            ispassed: "false"
+        }
+        ,
+        "phonenumber": {
+            label: "手机",
+            type: "text",
+            name: "phonenumber",
+            id: "phonenumber",
+            validator: /^[1][0-9]{10}$/,
+            tips: "必填,11位数字",
+            success: "号码验证正确",
+            fail: "号码验证错误",
+            ispassed: "false"
+        }
+    };
+
+    //        formBox.innerHTML = "<label>"+validationData.name.label+"<input type='+validationData.name.type+' /> ";
+
+    function formFactory(data) {
+        this.data = data;
+    }
+
+    formFactory.prototype = {
+        init:function(){
+            var tmpL = "";
+            for(key in this.data){
+                console.log(this.data[key]);
+                tmpL += "<tr><td><label for='+this.data[key].id+'>"+this.data[key].label+"</label></td><td><input type='+this.data[key].type+' id='+this.data[key].id+' name='+this.data[key].name+'/></td></tr><tr><td></td><td><span>"+this.data[key].tips+"</span></td></tr>"
+            }
+            formBox.innerHTML = tmpL;
+        },
+    };
+
+    var ddd = new formFactory(text);
+    ddd.init();
+</script>
+</body>
+</html>
