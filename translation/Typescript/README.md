@@ -23,7 +23,7 @@ function f(){
 ```
 
 程序员可以使用TypeScript语言服务来感受类型推导带来的好处。比如说，编辑器可以整合TypeScript语言服务，并使用服务来查找在一个字符串上的成员变量，如下边的截图那样工作：
-![嘿嘿，琪琪你在干啥呢]（https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png）
+[![嘿嘿，琪琪你在干啥呢](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png)]
 
 在这个例子中程序员无需提供类型注解,直接从类型推导中获得好处。有些时候，确实需要程序员手动提供类型注解。在TypeScript,我们可以表达对一个函数参数的要求，如下边代码片段所示：
 ```typescript
@@ -150,7 +150,7 @@ var nope: () => number = sameType; //Error，类型不一致
 ```
 这一签名表示$函数可以接收一个函数.事实上，在jQuery库中，当$接收到一个函数的时候,jQuery将在DocumentContentReady时间发生时，调用这个函数。因为TypeScript支持重载,工具可以使用TypeScript来显示所有的函数签名以及文档提示，在相关签名被调用时给出正确的文档。
 (TypeScript通过这种给变量“划重点”的方式使得在使用IDE等开发工具时对开发者十分友好，只需要提供表述类型信息的第三方库的d.ts文件，IDE就能实现智能提示)
-![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image2.png)
+[![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image2.png)]
 
 ##1.4 结构化子类型 （Structural Subtyping）
 对象类型都是通过结构化的方式来比较的。比如，在下边的代码片段中，CPoint包含了Point所要求的所有属性，所以CPoint被认为是满足Point接口的。一个类可以选择性地声明它实现了一个接口，编译器会检查声明的结构兼容性。这个例子也表明一个对象类型也可能与一个对象字面量所被推导的类型匹配，只要对象字面量提供了所有这个对象类型要求的成员。
