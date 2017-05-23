@@ -1,4 +1,4 @@
-#1.介绍
+# 1.介绍
 诸如web email,地图,文档编辑,团队协作工具等Javascript 应用在日常工作中变得越来越重要。为了迎合使用Javascript作为编程语言的开发团队更好地构建和维护大型Javascript项目的需要,我们设计了TypeScript。TypeScript能够帮助开发团队定义不同软件组件间的接口以及洞悉现成Javascript类库的接口行为。TypeScript让团队将代码组织成动态加载的模块的形式来避免命名冲突。TypeScript的可选类型系统也使得Javascript程序员能工高效地使用开发工具，并且进行静态检查，符号查找，表达式自动提示以及代码修改。
 
 TypeScript 是Javascript的语法糖果，它的语法规则是ECMAScript 2015(es6)的超集。每个Javascript程序实际上都是TypeScript程序.TypeScript 编译器只进行TypeScript项目的文件的单独编译,并不会对声明的变量重新排序。这使得编译输出的Javascript结果和输入TypeScript代码高度匹配。TypeScript不会转换变量的名字，这一点使得在结果Javascript代码上进行调试更容易。TypeScript可选地提供了souce map和源代码调试的功能。TypeScript工具通常在在文件保存就会触发Javascript代码的生成,同时保留在Javascript开发中常用的测试,编辑，刷新等流程（琪琪：不确定是不是这个意思）。
@@ -23,7 +23,7 @@ function f(){
 ```
 
 程序员可以使用TypeScript语言服务来感受类型推导带来的好处。比如说，编辑器可以整合TypeScript语言服务，并使用服务来查找在一个字符串上的成员变量，如下边的截图那样工作:
-[![嘿嘿，琪琪你在干啥呢](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png)]
+![嘿嘿，琪琪你在干啥呢](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png)
 
 在这个例子中程序员无需提供类型注解,直接从类型推导中获得好处。有些时候，确实需要程序员手动提供类型注解。在TypeScript,我们可以表达对一个函数参数的要求，如下边代码片段所示：
 ```typescript
@@ -44,7 +44,7 @@ function f(s){
 
 在Javascript输出中，所有的类型注解都被擦除了。通常，TypeScript会擦除所有的类型注解后发布最终编译完成的Javascript代码。
 
-##1.1 环境声明(Ambient Declarations)
+## 1.1 环境声明(Ambient Declarations)
 环境声明将变量引入到TypeScript作用域中,但是这个声明不会对最终编译的出来的Javascript文件有任何的影响。程序员可以先使用环境声明来告诉TypeScript编译器其它的组件将提供这个变量的定义。举个栗子,默认情况下TypeScript编译器对那些未定义的变量的使用将打印错误。为了加入一些通用的浏览器定义的变量，TypeScript程序员可以使用环境声明。下边的代码声明了由浏览器提供的‘document’对象。因为这个声明并没有指定类型,所以将把它推导为any类型（TypeScript中any类型为通用类型）。类型any意味着TypeScript工具无需对document对象做任何的假设。下面的一些例子将展示程序员应该如何使用类型来进一步描述一个对象的应有行为。
 
 ```typescript
@@ -62,7 +62,7 @@ declare var $;
 Section 1.3提供了更详尽的例子来说明程序员如果为jQuery以及其它库添加类型信息。
 
 
-##1.2 函数类型
+## 1.2 函数类型
 函数表达式是Javascript的一个强大的特性。这个特性使得函数定义可以创建闭包--闭包就是一个能够捕获外围作用域变量的函数。闭包是目前Javascript唯一的进行数据封装的途径。通过捕获使用外围环境的变量，闭包可以保留不能被闭包外部访问的信息。Javascript程序员经常使用闭包来表示事件处理器和其它异步回调。
 TypeScript函数类型使得程序员能够表达函数的期望签名。函数的签名就是一组参数类型加上一个返回类型。下面的雷子使用了函数类型来表达一个异步点赞机制下要求回调函数的签名：
 ```
@@ -87,7 +87,7 @@ vote("今天吃黄焖鸡",function(result:string){
 Section3.9.2将提供更多的关于函数类型的信息。
 
 
-##对象类型
+## 1.3对象类型
 TypeScript程序员使用对象类型来声明对象行为的期望。下面的代码使用了一个字面量对象来表明MakePoint函数的返回类型。
 ```typescript
 var MakePoint: () => {
@@ -150,9 +150,9 @@ var nope: () => number = sameType; //Error，类型不一致
 ```
 这一签名表示$函数可以接收一个函数.事实上，在jQuery库中，当$接收到一个函数的时候,jQuery将在DocumentContentReady时间发生时，调用这个函数。因为TypeScript支持重载,工具可以使用TypeScript来显示所有的函数签名以及文档提示，在相关签名被调用时给出正确的文档。
 (TypeScript通过这种给变量“划重点”的方式使得在使用IDE等开发工具时对开发者十分友好，只需要提供表述类型信息的第三方库的d.ts文件，IDE就能实现智能提示)
-[![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image2.png)]
+![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image2.png)
 
-##1.4 结构化子类型 （Structural Subtyping）
+## 1.4 结构化子类型 （Structural Subtyping）
 对象类型都是通过结构化的方式来比较的。比如，在下边的代码片段中，CPoint包含了Point所要求的所有属性，所以CPoint被认为是满足Point接口的。一个类可以选择性地声明它实现了一个接口，编译器会检查声明的结构兼容性。这个例子也表明一个对象类型也可能与一个对象字面量所被推导的类型匹配，只要对象字面量提供了所有这个对象类型要求的成员。
 ```typescript
 interface Point {  
@@ -183,7 +183,7 @@ getX({ x: 0 });  // Error，缺了y
 Section 3.11将详细介绍类型匹配的内容。
 
 
-##1.5基于上下文的类型推导(Contextual Typing)
+## 1.5基于上下文的类型推导(Contextual Typing)
 一般来说，TypeScript类型系统通过自底而上的方式来进行类型推导：从表达式树的叶子节点到根部。下边的例子中，TypeScript将通过从return表达式自底而上地推导出mul的返回类型为number类型。
 
 ```typescript
@@ -204,7 +204,7 @@ $.get("http://mysite.org/divContent",
 Section 4.23提供了更多关于基于上下文类型的信息。
 
 
-##1.6 类（Classes）
+## 1.6 类（Classes）
 Javascript实践中有两种非常普遍的设计模式，模块模式和类模式。粗略来讲，模块模式使用闭包来隐藏名字，封装私有变量，而类模式使用原型链来实现不同的面向对象继承机制方法，正如prototype.js等类库的实现。TypeScript的名称空间是模块模式的格式化。（模块模式这个术语从某种意义上来说是不幸的，因为ECMAScript 2015正式支持了模块，而这种支持方式和模块模式大相径庭。因此ECMAScript 2015使用名称空间这一术语。）
 
 
