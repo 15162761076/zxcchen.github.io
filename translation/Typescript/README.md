@@ -1,4 +1,4 @@
-1.介绍
+#1.介绍
 诸如web email,地图,文档编辑,团队协作工具等Javascript 应用在日常工作中变得越来越重要。为了迎合使用Javascript作为编程语言的开发团队更好地构建和维护大型Javascript项目的需要,我们设计了TypeScript。TypeScript能够帮助开发团队定义不同软件组件间的接口以及洞悉现成Javascript类库的接口行为。TypeScript让团队将代码组织成动态加载的模块的形式来避免命名冲突。TypeScript的可选类型系统也使得Javascript程序员能工高效地使用开发工具，并且进行静态检查，符号查找，表达式自动提示以及代码修改。
 
 TypeScript 是Javascript的语法糖果，它的语法规则是ECMAScript 2015(es6)的超集。每个Javascript程序实际上都是TypeScript程序.TypeScript 编译器只进行TypeScript项目的文件的单独编译,并不会对声明的变量重新排序。这使得编译输出的Javascript结果和输入TypeScript代码高度匹配。TypeScript不会转换变量的名字，这一点使得在结果Javascript代码上进行调试更容易。TypeScript可选地提供了souce map和源代码调试的功能。TypeScript工具通常在在文件保存就会触发Javascript代码的生成,同时保留在Javascript开发中常用的测试,编辑，刷新等流程（琪琪：不确定是不是这个意思）。
@@ -22,7 +22,7 @@ function f(){
 }
 ```
 
-程序员可以使用TypeScript语言服务来感受类型推导带来的好处。比如说，编辑器可以整合TypeScript语言服务，并使用服务来查找在一个字符串上的成员变量，如下边的截图那样工作：
+程序员可以使用TypeScript语言服务来感受类型推导带来的好处。比如说，编辑器可以整合TypeScript语言服务，并使用服务来查找在一个字符串上的成员变量，如下边的截图那样工作:
 [![嘿嘿，琪琪你在干啥呢](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png)]
 
 在这个例子中程序员无需提供类型注解,直接从类型推导中获得好处。有些时候，确实需要程序员手动提供类型注解。在TypeScript,我们可以表达对一个函数参数的要求，如下边代码片段所示：
