@@ -1,0 +1,46 @@
+1.介绍
+诸如web email,地图,文档编辑,团队协作工具等Javascript 应用在日常工作中变得越来越重要。为了迎合使用Javascript作为编程语言的开发团队更好地构建和维护大型Javascript项目的需要,我们设计了TypeScript。TypeScript能够帮助开发团队定义不同软件组件间的接口以及洞悉现成Javascript类库的接口行为。TypeScript让团队将代码组织成动态加载的模块的形式来避免命名冲突。TypeScript的可选类型系统也使得Javascript程序员能工高效地使用开发工具，并且进行静态检查，符号查找，表达式自动提示以及代码修改。
+
+TypeScript 是Javascript的语法糖果，它的语法规则是ECMAScript 2015(es6)的超集。每个Javascript程序实际上都是TypeScript程序.TypeScript 编译器只进行TypeScript项目的文件的单独编译,并不会对声明的变量重新排序。这使得编译输出的Javascript结果和输入TypeScript代码高度匹配。TypeScript不会转换变量的名字，这一点使得在结果Javascript代码上进行调试更容易。TypeScript可选地提供了souce map和源代码调试的功能。TypeScript工具通常在在文件保存就会触发Javascript代码的生成,同时保留在Javascript开发中常用的测试,编辑，刷新等流程（琪琪：不确定是不是这个意思）。
+
+TypeScript 语法包括了所有在ECMAScript 2015（es6）发表的特性,如类(class),模块等。同时提供了将这些高级特性翻译到兼容更老版本的ECMAScript（如ES3,ES5）的能力。
+
+类（class）使得程序员使用标准的方式来使用面向对象的设计模式，使得继承等特性更加可读,互操作性更高。模块使得程序员能够将他们的代码组织成组件同时避免了名称冲突。TypeScript编译器提供了模块代码生成的选项来支持静态模块加载和动态模块加载。
+
+TypeScript 也提供了Javascript 程序员一个可选地类型注解系统,这些类型注解看起来就像是JSDoc的注释,但在TypeScript它们被整合到了语法当中。这种整合使得代码可读性更高,同时降低了同步类型注解和对应变量的维护成本。
+
+TypeScript类型系统允许程序员表达对Javascript对象能力的限制,并使用一些工具来执行这些限制。为了减少注解的数量同时不降低这些工具的可用性,TypeScript类型系统大量地使用了类型推导。比如，下边的代码，TypeScript会将变量i的类型推导为number。
+```javascript
+var i = 0;
+```
+
+TypeScript 将认为下边的函数具有string类型的返回值：
+```javascript
+function f(){
+    return "ddd";
+}
+```
+
+程序员可以使用TypeScript语言服务来感受类型推导带来的好处。比如说，编辑器可以整合TypeScript语言服务，并使用服务来查找在一个字符串上的成员变量，如下边的截图那样工作：
+![嘿嘿，琪琪你在干啥呢]（https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png）
+
+在这个例子中程序员无需提供类型注解,直接从类型推导中获得好处。有些时候，确实需要程序员手动提供类型注解。在TypeScript,我们可以表达对一个函数参数的要求，如下边代码片段所示：
+```typescript
+function f(s:string){
+    return s;
+}
+
+f({}); 	    // 这里就出错啦，琪琪
+f("hello"); // 唔，不错
+```
+
+这里参数s的类型注解使得TypeScript类型检查知道程序员需要一个字符串参数。在函数f的内部，TypeScript工具(如IDE)可以假定这个参数是字符串，然后提供对应的操作符合法性检查以及代码自动完成（自动提示）。工具同样可以检测到第一个对函数f的调用出错,因为f需要一个字符串参数而不是一个对象。对于这个函数f，经过编译后，会得到下边的Javascript代码：
+```javascript
+function f(s){
+    return s;
+}
+```
+
+在Javascript输出中，所有的类型注解都被擦除了。通常，TypeScript会擦除所有的类型注解后发布最终编译完成的Javascript代码。
+
+
