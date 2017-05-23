@@ -11,7 +11,7 @@ TypeScript 也提供了Javascript 程序员一个可选地类型注解系统,这
 
 TypeScript类型系统允许程序员表达对Javascript对象能力的限制,并使用一些工具来执行这些限制。为了减少注解的数量同时不降低这些工具的可用性,TypeScript类型系统大量地使用了类型推导。比如，下边的代码，TypeScript会将变量i的类型推导为number。
 
-```
+```javascript
 var i = 0;
 ```
 
