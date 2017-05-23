@@ -24,7 +24,7 @@ function f(){
 
 程序员可以使用TypeScript语言服务来感受类型推导带来的好处。比如说，编辑器可以整合TypeScript语言服务，并使用服务来查找在一个字符串上的成员变量，如下边的截图那样工作:
 
-![嘿嘿，琪琪你在干啥呢](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png)
+![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image1.png "嘿嘿，琪琪你在干啥呢")
 
 在这个例子中程序员无需提供类型注解,直接从类型推导中获得好处。有些时候，确实需要程序员手动提供类型注解。在TypeScript,我们可以表达对一个函数参数的要求，如下边代码片段所示：
 ```typescript
