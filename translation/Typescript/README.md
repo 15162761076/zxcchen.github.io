@@ -207,12 +207,264 @@ Section 4.23提供了更多关于基于上下文类型的信息。
 
 
 ## 1.6 类（Classes）
-Javascript实践中有两种非常普遍的设计模式，模块模式和类模式。粗略来讲，模块模式使用闭包来隐藏名字，封装私有变量，而类模式使用原型链来实现不同的面向对象继承机制方法，正如prototype.js等类库的实现。TypeScript的名称空间是模块模式的格式化。（模块模式这个术语从某种意义上来说是不幸的，因为ECMAScript 2015正式支持了模块，而这种支持方式和模块模式大相径庭。因此ECMAScript 2015使用名称空间这一术语。）
+Javascript实践中有两种非常普遍的设计模式，模块模式和类模式。粗略来讲，模块模式使用闭包来隐藏名字，封装私有变量，而类模式使用原型链来实现不同的面向对象继承机制，正如prototype.js等类库的实现。TypeScript的名称空间(Namespace)是模块模式的形式化。(模块模式这个术语从某种意义上来说是不幸的，因为ECMAScript 2015正式支持了模块，而这种支持方式和模块模式大相径庭。因此ECMAScript 2015使用名称空间这一术语。)
+
+这一节以及名称空间的章节将会展示在生成与ES3或ES5等标准兼容的代码时，TypeScript是如何将类和名称空间等新特性转换为一致的Javascript方言。TypeScript的转码目标在于精确地模拟程序员原来在无需工具辅助情况下实现类和名称空间的过程。这一部分还将讲解TypeScript如何为每一个类声明推导类型。下边我们从一个简单的BankAccount 类开始。
+```TypeScript
+class BankAccount {  
+    balance = 0;  
+    deposit(credit: number) {  
+        this.balance += credit;  
+        return this.balance;  
+    }  
+}
+```
+这个类将转换为下边的Javascript代码
+```javascript
+var BankAccount = (function () {  
+    function BankAccount() {  
+        this.balance = 0;  
+    }  
+    BankAccount.prototype.deposit = function(credit) {  
+        this.balance += credit;  
+        return this.balance;  
+    };  
+    return BankAccount;  
+})();
+```
+这一TypeScript类声明创建了一个叫做BankAcount的变量(匿名函数里边的那个函数声明)，它的值就是BankAccount实例的构造函数。这一声明同时创建了一个具有同样名字的实例类型(匿名函数调用外部的那个变量)。如果我们将这个类型写成一个接口那么它看起来像下边这样:
+```TypeScript
+interface BankAccount {  
+    balance: number;  
+    deposit(credit: number): number;  
+}
+```
+如果我们要写出BankAccount构造函数的函数类型，那么将是下边的形式:
+```TypeScript
+var BankAccount: new() => BankAccount;
+```
+这个函数签名使用new前缀开始的，表明BankAccount函数必须被当做一个构造函数来调用。一个函数类型可以同时具有调用签名和构造器签名。比如Javascript內建的Date对象同时包含这样的两种签名。
 
 
+如果我们想要开启我们的银行账户(Bank Account)，里边带有一定的存款(balance),我们可以给BankAccount类加一个构造器声明:
+```TypeScript
+class BankAccount {  
+    balance: number;  
+    constructor(initially: number) {  
+        this.balance = initially;  
+    }  
+    deposit(credit: number) {  
+        this.balance += credit;  
+        return this.balance;  
+    }  
+}
+```
+这一版本的BankAccount要求我们引入一个构造器参数，然后将它赋值为balance字段.为了简化这一通用情况,TypeScript接收下边的短语法:
+```TypeScript
+class BankAccount {  
+    constructor(public balance: number) {  
+    }  
+    deposit(credit: number) {  
+        this.balance += credit;  
+        return this.balance;  
+    }  
+}
+```
+public关键字表示构造器参数将被保留为一个内部字段。Public是类成员的默认访问权限,但程序员可以根据自己的需要指定private或者protected访问权限。访问权限是类设计期间的限制，这种限制是在静态类型检查的过程中实施的，而不是运行时。
+
+TypeScript类也支持继承，如下例子：
+```TypeScript
+class CheckingAccount extends BankAccount {  
+    constructor(balance: number) {  
+        super(balance);  
+    }  
+    writeCheck(debit: number) {  
+        this.balance -= debit;  
+    }  
+}
+```
+在这个例子中，CheckingAccount从类BankAccount继承。CheckingAccount的构造函数通过super关键字调用了父亲类BankAccount的构造函数。在生成的Javascript代码中，CheckingAccount的prototype将被链向BankAccount的prototype(即CheckingAccount.prototype.__proto__===BankAccount.prototype)。
+
+TypeScript类也可以指定静态成员，静态成员将变成类构造函数的属性。
+
+Section 8提供了class的更多信息。
 
 
+## 1.7 枚举(Enum)类型
+TypeScript 允许程序员将一系列的数字常量作为一个枚举类型。下边的例子创建了一个枚举类型，表示计算器程序中的操作符:
+```TypeScript
+const enum Operator {  
+    ADD,  
+    DIV,  
+    MUL,  
+    SUB  
+}
 
+function compute(op: Operator, a: number, b: number) {  
+    console.log("the operator is" + Operator[op]);  
+    // ...  
+}
+```
+在这个例子中，compute函数打印operator op，这使用了enum类型的一个特性,反向从枚举的值映射到对应的字符串表示.比如，Operator的声明自动地为枚举值分配了数字，从0开始。第9部分将讲解程序员如何显式地给枚举成员分配数字，以及使用任意字符串来命名该枚举值。
+当枚举是用const标识符来声明的时候,TypeScript编译器将对应enum成员作为Javascript中的常量来处理(如直接在使用对应枚举的地方换成对应的常量)。这在很多Javascript引擎都将提升性能。
+
+比如，compute函数也许包含了一个如下的switch表达式,
+```TypeScript
+switch (op) {  
+    case Operator.ADD:  
+        // execute add  
+        break;  
+    case Operator.DIV:  
+        // execute div  
+        break;  
+    // ...  
+}
+```
+对于这个switch表达式,编译器将生成如下代码:
+```TypeScript
+switch (op) {  
+    case 0 /* Operator.ADD */:  
+        // execute add  
+        break;  
+    case 1 /* Operator.DIV */:  
+        // execute div  
+        break;  
+    // ...  
+}
+```
+JavaScript实现可以根据这样的显式设定常量的代码来为这个switch语句生成更高效地底层代码，比如说根据case的值的创建一个跳跃表。
+
+
+## 1.8 重载字符串参数
+TypeScript的一个重要目标就是要为现有的Javascript编程模式提供准确直观的类型系统。因而,TypeScript引入了generic类型(泛型),这将在下一节讲解。这一节的主题是重载字符串参数。
+
+Javascript编程接口经常包含那些接收一个字符串参数并且函数行为受该参数影响的函数。DOM重度地使用了这种编程模式。比如下边的截屏显示了document的createElement方法有好几个签名,其中一些签名根据输入的字符串参数来指定返回的类型。 
+
+![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image3.png)
+一下的代码片段使用了这一特性。因为span变量被推导为HTMLSpanElement类型,下边的代码可以引用span的isMultiline属性而不会报任何的静态类型检查错误。
+```TypeScript
+var span = document.createElement("span");  
+span.isMultiLine = false;  // OK: HTMLSpanElement has isMultiline property
+```
+下边的截图中,编程工具结合了字符串参数重载和上下文类型识别的技术来推导变量e的类型是MouseEvent,从而认为e有一个clientX属性。
+
+![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image4.png)
+
+Section 3.9.2.4 提供了在签名中使用字符串字面量的相关信息。
+
+## 1.9 泛型
+正如字符串重载,泛型使得TypeScript更精确地捕捉了Javascript类库的行为。因为他们使得类型信息从客户代码流动到库代码中再回流至客户代码。泛型编程将比任何的其他TypeScript工具更能支持丰富的API的描述。
+
+为了说明这一点,让我们来看看TypeScript对内置的Javascript数组的接口。你可以从TypeScript发行版附带的lib.d.ts文件中找到下边的接口描述.
+```TypeScript
+interface Array<T> {  
+    reverse(): T[];  
+    sort(compareFn?: (a: T, b: T) => number): T[];  
+    // ...   
+}
+```
+如上,接口的定义可以拥有一个或多个类型参数.在这个例子中,Array 接口有一个参数T,这表示了数组的元素类型。reverse方法返回了一个具有同样类型的数组。sort方法接收一个可选地参数,compareFn,这个参数是一个比较两个T类型参数并返回一个数字的函数。最后,sort返回了一个T类型的数组。
+
+函数同样也可以有泛型参数。举个栗子,数组接口包含了一个map方法,如下定义:
+```TypeScript
+map<U>(func: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];
+```
+map方法当在T类型的数组上执行时,将对数组内每一个元素应用func函数,返回一个U类型的值。
+TypeScript编译器经常推导泛型方法参数,使得程序员无需显式地提供他们。在下边的例子中,编译器将map 方法的参数U推导为string,因为被传入map的方法返回了一个string类型.
+```TypeScript
+function numberToString(a: number[]) {  
+    var stringArray = a.map(v => v.toString());  
+    return stringArray;  
+}
+```
+在这个例子中编译器认为numberToString函数返回了一个字符串数组。
+在TypeScript,类可以有类型参数。下边的代码声明了一个类来实现类型T的链表。这个代码展示了程序员如何限制类型参数来扩展一个具体类型。在这个例子中,链表中的元素必须实现NamedItem接口。这使得程序员能够实现log方法来打印每个元素的名字。
+
+```TypeScript
+interface NamedItem {  
+    name: string;  
+}
+
+class List<T extends NamedItem> {  
+    next: List<T> = null;
+
+    constructor(public item: T) {  
+    }
+
+    insertAfter(item: T) {  
+        var temp = this.next;  
+        this.next = new List(item);  
+        this.next.next = temp;  
+    }
+
+    log() {  
+        console.log(this.item.name);  
+    }
+
+    // ...  
+}
+```
+3.7小节将阐述更多关于泛型的内容。
+
+## 1.10 名称空间(Namespace)
+类和接口提供了分离组件接口和实现的机制来支持大规模JavaScript应用开发项目。TypeScript在设计阶段完成了实现的封装(通过限制私有或protected成员的使用),这种封装并不能延续到运行时，因为运行时所有对象的属性都是可以被访问的。未来版本的Javascript或许会提供私有名称来确保运行时阶段的数据封装性。
+
+在Javascript中，最常用来实现数据封装的设计模式就是模块模式。这种模块模式使用了闭包，划分了组建与组件之间的界限，提供了一种可以组织的结构和动态加载的能力，是一种自然而然的模块实现方式。模块模式也提供了引入命名空间的能力,避免了全局命名空间的滥用。
+
+下边的代码阐述了Javascript模块模式:
+```TypeScript
+(function(exports) {  
+    var key = generateSecretKey();  
+    function sendMessage(message) {  
+        sendSecureMessage(message, key);  
+    }  
+    exports.sendMessage = sendMessage;  
+})(MessageModule);
+```
+这个例子展现了两个模块模式的基本要素:模块闭包和模块对象。模块闭包就是一个封装了模块实现的函数,所谓的实现指的是这个例子中key变量和sendMessage方法。模块对象包含了输出变量和输出方法。简单的模块可以创建一个模块对象。上边的模块将模块对象作为参数exports,将sendMessage方法加入到模块对象中。这种参数方式简化了动态加载模块的过程，并且支持将模块代码拆分到多个文件。
+
+这个例子假设了外部的作用域定义了函数generateSecretKey和sendSecureMessage。它也假设外部作用域将模块对象舍弟你搞为MessageModule。
+TypeScript 命名空间提供了一种机制简洁地表达了这样的模块模式。在TypeScript,程序员可以将模块模式和类模式组合起来，即将名称空间和类嵌套。
+下边的例子展示了名称空间的简单实用。
+```TypeScript
+namespace M {  
+    var s = "hello";  
+    export function f() {  
+        return s;  
+    }  
+}
+
+M.f();  
+M.s;  // Error, s is not exported
+```
+这个例子中variable是一个名称空间的私有变量,函数f 从namespace export到外部。对于接口和变量在名称空间的使用情况,看如下例子:
+```TypeScript
+interface M {  
+    f(): string;  
+}
+
+var M: M;
+```
+接口M汇总了名称空间M的外部可见的行为。这个例子中，我们用与接口同样的名字来初始化变量,因为在TypeScript中类型名字和变量名字并不冲突。每个作用域包含了一个变量声明空间和一个类型声明空间(详细内容查看2.3节)。
+
+TypeScript编译器为这个名称空间输出下边的Javascript代码:
+```javascript
+var M;  
+(function(M) {  
+    var s = "hello";  
+    function f() {  
+        return s;  
+    }  
+    M.f = f;  
+})(M || (M = {}));
+```
+这个例子中编译器假设名称空间存在于全局作用域的变量M下，变量M可能被初始化也可能未被初始化。
+
+## 1.11 模块
+TypeScript也支持ECMAScript 2015的模块定义。ES2015的模块就是一系列包含高层export和import语句的JS文件。对于这类模块,TypeScript编译器可以生成ES2015兼容代码或更低版本的ES标准兼容代码，适用于各种各样的模块加载系统,如CommonJS,AMD，UMD模块规范系统等。
+
+
+# 2 基础
 
 
 
