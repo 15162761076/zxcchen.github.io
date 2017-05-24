@@ -341,7 +341,8 @@ TypeScript的一个重要目标就是要为现有的Javascript编程模式提供
 Javascript编程接口经常包含那些接收一个字符串参数并且函数行为受该参数影响的函数。DOM重度地使用了这种编程模式。比如下边的截屏显示了document的createElement方法有好几个签名,其中一些签名根据输入的字符串参数来指定返回的类型。 
 
 ![](https://github.com/Microsoft/TypeScript/raw/master/doc/images/image3.png)
-一下的代码片段使用了这一特性。因为span变量被推导为HTMLSpanElement类型,下边的代码可以引用span的isMultiline属性而不会报任何的静态类型检查错误。
+
+以下的代码片段使用了这一特性。因为span变量被推导为HTMLSpanElement类型,下边的代码可以引用span的isMultiline属性而不会报任何的静态类型检查错误。
 ```TypeScript
 var span = document.createElement("span");  
 span.isMultiLine = false;  // OK: HTMLSpanElement has isMultiline property
